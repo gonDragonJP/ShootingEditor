@@ -2,6 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/Takada/eclipse-workspace/SQLite_Driver/sqlite-jdbc-3.8.11.2.jar"/>
+=======
+>>>>>>> branch 'master' of https://github.com/gonDragonJP/ShootingEditor
 	<classpathentry kind="output" path="target"/>
 </classpath>
