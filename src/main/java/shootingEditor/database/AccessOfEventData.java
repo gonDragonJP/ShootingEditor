@@ -8,7 +8,7 @@ import shootingEditor.stage.EventData;
 
 public class AccessOfEventData {
 	
-	private static String databasePath ="C:/Users/Takahiro/workspace/MySQLite/test.db";
+	private static String databasePath = AbsoluteDirectryHolder.getStageManagerDBPath();
 		
 	public static void setEventList(ArrayList<EventData> eventList){
 		

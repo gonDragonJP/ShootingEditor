@@ -20,7 +20,7 @@ import shootingEditor.animation.AnimationSet.AnimeKind;
 
 public class AccessOfEnemyData {
 	
-	private static String databasePath ="C:/Users/Takahiro/workspace/MySQLite/test.db";
+	private static String databasePath = AbsoluteDirectryHolder.getStageManagerDBPath();
 	
 	public static void setEnemyList(ArrayList<EnemyData> enemyList){
 		

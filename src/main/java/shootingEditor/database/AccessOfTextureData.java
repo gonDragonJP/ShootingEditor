@@ -11,7 +11,7 @@ import shootingEditor.texture.TextureSheet;
 
 public class AccessOfTextureData {
 	
-	private static final String databaseDir = "C:/Users/Takahiro/workspace/textureComposer/texDataBase/";
+	private static String databaseDir = AbsoluteDirectryHolder.getTextureDBPath();
 	
 	//private static final String databaseDir = ".\\texDataBase\\";
 	private static final String databasePath = databaseDir + "texDB.db";
