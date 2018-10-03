@@ -19,35 +19,15 @@ import shootingEditor.stage.StageData;
 import shootingEditor.treeView.TreeContent;
 
 
-public class MainApp extends Application implements CallbackOfMainApp{
+public class MainApp extends Application{
 	
 	private static final int WinX = 1280;
 	private static final int WinY = 640;
 	
-	public static final int CanvasX = 320;
-	public static final int CanvasY = 500;
-	
-	public Canvas canvas = new Canvas(CanvasX, CanvasY);
-	public CheckBox checkEnableTex = new CheckBox("Enable Texture");
-	public Slider slider = new Slider(0,0,0);
-	public TextField scrollTextField = new TextField();
-	public Button resetButton = new Button();
-	public Button startButton = new Button();
-	public Button stopButton = new Button();
-	public Button testEnemyButton = new Button();
-	public Button storeTreeDataButton = new Button();
-	public TableView<EventData> eventTable = new TableView<>();
-	public TableView<EnemyData> enemyTable = new TableView<>();
-	public TreeView<TreeContent> treeView = new TreeView<>();
-	public Tab tabEvent = new Tab();
-	public Tab tabEnemy = new Tab();
-	public TabPane tabPane = new TabPane();
-	public Alert alertBox = new Alert(Alert.AlertType.CONFIRMATION);
-	
-	private DrawModule drawModule;
-	private TableModule tableModule;
-	private TreeModule treeModule;
-	private GameTestModule gameTestModule;
+	public DrawModule drawModule;
+	public TableModule tableModule;
+	public TreeModule treeModule;
+	public GameTestModule gameTestModule;
 	
 	public static void main(String[] args){
 		
@@ -67,14 +47,11 @@ public class MainApp extends Application implements CallbackOfMainApp{
 		initStage(stage);
 
 		gameTestModule.setGameStage(1);
-		
-		int scrollMax = StageData.stageEndPoint;
-		slider.setMax(scrollMax);
 	}
 	
 	private void initStage(Stage stage){
 		
-		SetScene.exec(this, stage);
+		MainSceneUtil.setScene(this, stage);
 	
 		stage.setTitle("ShootingEditor ver1.0");
 		stage.setWidth(WinX);
@@ -83,35 +60,5 @@ public class MainApp extends Application implements CallbackOfMainApp{
 		stage.show();
 		
 		drawModule.drawScreen();
-	}
-
-	synchronized public void updateSlider(){
-		
-		drawModule.drawScreen();
-		gameTestModule.refreshQueueOfEvent();
-	}
-
-	@Override
-	public DrawModule getdrawModule() {
-		
-		return drawModule;
-	}
-
-	@Override
-	public TableModule getTableModule() {
-		
-		return tableModule;
-	}
-	
-	@Override
-	public TreeModule getTreeModule() {
-		
-		return treeModule;
-	}
-
-	@Override
-	public GameTestModule getgameTestModule() {
-		
-		return gameTestModule;
 	}
 }

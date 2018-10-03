@@ -18,43 +18,40 @@ import shootingEditor.treeView.event.TreeEventCell;
 
 public class TreeModule {
 	
-	private CallbackOfMainApp cbOfMainApp;
-	
-	private TreeView<TreeContent> treeView;
+	private MainApp mainApp;
 	
 	private EnemyData tempEnemyDataForEdit = new EnemyData();
 	private EventData tempEventDataForEdit = new EventData();
 	
 	public TreeModule(MainApp mainApp){
 		
-		cbOfMainApp = mainApp;
-		this.treeView = mainApp.treeView;
+		this.mainApp = mainApp;
 	}
 	
 	public void setEnemyTree(EnemyData enemyData){
 		
 		tempEnemyDataForEdit.copy(enemyData);
 		
-		treeView.setCellFactory(treeView -> new TreeEnemyCell());
+		MainSceneUtil.treeView.setCellFactory(treeView -> new TreeEnemyCell());
 			// cellはすべてのitemに対して作られるので単一のインスタンス変数を渡すだけではダメです
 			// このコールバックはツリーを作ると複数回呼び出されます
-		EnemyTreeUtil.addEnemyTree(treeView, tempEnemyDataForEdit);
+		EnemyTreeUtil.addEnemyTree(MainSceneUtil.treeView, tempEnemyDataForEdit);
 	}
 	
 	public void setEventTree(EventData eventData){
 		
 		tempEventDataForEdit.copy(eventData);
 		
-		treeView.setCellFactory(treeView -> new TreeEventCell());
-		EventTreeUtil.addeventTree(treeView, tempEventDataForEdit);
+		TreeView<TreeContent> view = MainSceneUtil.treeView;
+		view.setCellFactory(treeView -> new TreeEventCell());
+		EventTreeUtil.addeventTree(view, tempEventDataForEdit);
 	}
 
 	public void testTreeEnemy(){
 		
 		if (tempEnemyDataForEdit == null) return;
 		
-		GameTestModule gameTestModule = cbOfMainApp.getgameTestModule();
-		gameTestModule.testEnemy(tempEnemyDataForEdit);
+		mainApp.gameTestModule.testEnemy(tempEnemyDataForEdit);
 	}
 	
 	public void storeEnemyDataToDB(){
@@ -70,12 +67,10 @@ public class TreeModule {
 		
 		AccessOfEnemyData.addEnemyData(tempEnemyDataForEdit);
 		
-		GameTestModule gameTestModule = cbOfMainApp.getgameTestModule();
-		gameTestModule.refreshEnemyList();
+		mainApp.gameTestModule.refreshEnemyList();
 		
-		TableModule tableModule = cbOfMainApp.getTableModule();
-		tableModule.setEnemyTableData(StageData.enemyList);
-		tableModule.scrollEnemyTableTo(id);
+		mainApp.tableModule.setEnemyTableData(StageData.enemyList);
+		mainApp.tableModule.scrollEnemyTableTo(id);
 	}
 		
 	private boolean checkOverwritePermission(){	
@@ -95,11 +90,9 @@ public class TreeModule {
 	public void storeEventDataToDB(){
 		
 		AccessOfEventData.addEventData(tempEventDataForEdit);
+	
+		mainApp.gameTestModule.refreshEventList();
 		
-		GameTestModule gameTestModule = cbOfMainApp.getgameTestModule();
-		gameTestModule.refreshEventList();
-		
-		TableModule tableModule = cbOfMainApp.getTableModule();
-		tableModule.setEventTableData(StageData.eventList);
+		mainApp.tableModule.setEventTableData(StageData.eventList);
 	}
 }

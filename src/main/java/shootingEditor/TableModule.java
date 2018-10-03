@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import shootingEditor.MainSceneUtil.TabState;
 import shootingEditor.database.AccessOfEnemyData;
 import shootingEditor.database.AccessOfEventData;
 import shootingEditor.enemy.EnemyData;
@@ -24,42 +25,31 @@ import shootingEditor.treeView.enemy.EnemyTreeUtil;
 
 public class TableModule {
 	
-	private CallbackOfMainApp cbOfMainApp;
-	
-	private TableView<EventData> eventTable;
-	private TableView<EnemyData> enemyTable;
-	private Tab tabEnemy;
-	private TabPane tabPane;
-	private Slider slider;
+	private MainApp mainApp;
 	
 	public TableModule(MainApp mainApp){
 		
-		cbOfMainApp = mainApp;
-	
-		this.eventTable = mainApp.eventTable;
-		this.enemyTable = mainApp.enemyTable;
-		this.tabEnemy = mainApp.tabEnemy;
-		this.tabPane = mainApp.tabPane;
-		this.slider = mainApp.slider;
+		this.mainApp = mainApp;
+
 	}
 	
 	public int getTabIndex(){
 		
-		return tabPane.getSelectionModel().selectedIndexProperty().get();
+		return MainSceneUtil.tabPane.getSelectionModel().selectedIndexProperty().get();
 	}
 	
 	public void setEventTableData(ArrayList<EventData> list){
 		
 		ObservableList<EventData> data = FXCollections.observableArrayList();
 		data.setAll(list);
-		eventTable.itemsProperty().setValue(data);
+		MainSceneUtil.eventTable.itemsProperty().setValue(data);
 	}
 	
 	public void setEnemyTableData(ArrayList<EnemyData> list){
 		
 		ObservableList<EnemyData> data = FXCollections.observableArrayList();
 		data.setAll(list);
-		enemyTable.itemsProperty().setValue(data);
+		MainSceneUtil.enemyTable.itemsProperty().setValue(data);
 	}
 	
 	public void onClickedEventTable(MouseEvent e){
@@ -81,28 +71,26 @@ public class TableModule {
 	
 	public void movePosition(){
 		
-		GameTestModule gameTestModule = cbOfMainApp.getgameTestModule();
+		EventData eventData = MainSceneUtil.eventTable.getSelectionModel().getSelectedItem();
+		MainSceneUtil.slider.setValue(eventData.scrollPoint);
 		
-		EventData eventData = eventTable.getSelectionModel().getSelectedItem();
-		slider.setValue(eventData.scrollPoint);
-		
-		gameTestModule.updateSlider();
+		mainApp.gameTestModule.updateSlider();
 	}
 	
 	private void setEventToTreeView(){
 		
-		EventData eventData = eventTable.getSelectionModel().getSelectedItem();
-		cbOfMainApp.getTreeModule().setEventTree(eventData);
+		EventData eventData = MainSceneUtil.eventTable.getSelectionModel().getSelectedItem();
+		mainApp.treeModule.setEventTree(eventData);
 	}
 	
 	public void searchObject(){
 		
-		EventData eventData = eventTable.getSelectionModel().getSelectedItem();
+		EventData eventData = MainSceneUtil.eventTable.getSelectionModel().getSelectedItem();
 		int objectID = eventData.eventObjectID;	
 		int enemyIndex = StageData.getIndexOfEnemyList(objectID);
 
 		if(enemyIndex != -1){
-			tabPane.getSelectionModel().select(tabEnemy);
+			MainSceneUtil.setTabPane(TabState.enemyTable);
 			scrollEnemyTableTo(objectID);
 			setEnemyToTreeView();
 		}
@@ -121,27 +109,25 @@ public class TableModule {
 		menuItem[1].setOnAction(e ->{deleteEventData();});
 	
 		contextMenu.getItems().addAll(menuItem);
-		eventTable.setContextMenu(contextMenu);
+		MainSceneUtil.eventTable.setContextMenu(contextMenu);
 	}
 	
 	private void addNewEventData(){
 		
 		AccessOfEventData.addNewEventData();
 		
-		GameTestModule gameTestModule = cbOfMainApp.getgameTestModule();
-		gameTestModule.refreshEventList();
+		mainApp.gameTestModule.refreshEventList();
 		
 		setEventTableData(StageData.eventList);
-		eventTable.scrollTo(0);
+		MainSceneUtil.eventTable.scrollTo(0);
 	}
 	
 	private void deleteEventData(){
 		
-		EventData eventData = eventTable.getSelectionModel().getSelectedItem();
+		EventData eventData = MainSceneUtil.eventTable.getSelectionModel().getSelectedItem();
 		AccessOfEventData.deleteEventData(eventData);
-		
-		GameTestModule gameTestModule = cbOfMainApp.getgameTestModule();
-		gameTestModule.refreshEventList();
+	
+		mainApp.gameTestModule.refreshEventList();
 		
 		setEventTableData(StageData.eventList);
 	}
@@ -161,8 +147,8 @@ public class TableModule {
 	
 	public void setEnemyToTreeView(){
 		
-		EnemyData enemyData = enemyTable.getSelectionModel().getSelectedItem();
-		cbOfMainApp.getTreeModule().setEnemyTree(enemyData);
+		EnemyData enemyData = MainSceneUtil.enemyTable.getSelectionModel().getSelectedItem();
+		mainApp.treeModule.setEnemyTree(enemyData);
 	}
 	private void openEnemyContextMenu(){
 		
@@ -178,19 +164,18 @@ public class TableModule {
 		menuItem[2].setOnAction(e ->{addCopyEnemyData();});
 	
 		contextMenu.getItems().addAll(menuItem);
-		enemyTable.setContextMenu(contextMenu);
+		MainSceneUtil.enemyTable.setContextMenu(contextMenu);
 	}
 	
 	private void addNewEnemyData(){
 		
-		EnemyData selectedData = enemyTable.getSelectionModel().getSelectedItem();
+		EnemyData selectedData = MainSceneUtil.enemyTable.getSelectionModel().getSelectedItem();
 		EnemyCategory newDataCategory = 
 					(selectedData == null) ? EnemyCategory.FLYING : selectedData.getCategory();
 		
 		int newID = AccessOfEnemyData.addNewEnemyData(newDataCategory);
 		
-		GameTestModule gameTestModule = cbOfMainApp.getgameTestModule();
-		gameTestModule.refreshEnemyList();
+		mainApp.gameTestModule.refreshEnemyList();
 		
 		setEnemyTableData(StageData.enemyList);
 		scrollEnemyTableTo(newID);
@@ -199,17 +184,16 @@ public class TableModule {
 	public void scrollEnemyTableTo(int objectID){
 		
 		int enemyIndex = StageData.getIndexOfEnemyList(objectID);
-		enemyTable.getSelectionModel().select(enemyIndex);
-		enemyTable.scrollTo(enemyIndex);
+		MainSceneUtil.enemyTable.getSelectionModel().select(enemyIndex);
+		MainSceneUtil.enemyTable.scrollTo(enemyIndex);
 	}
 	
 	private void addCopyEnemyData(){
 		
-		EnemyData enemyData = enemyTable.getSelectionModel().getSelectedItem();
+		EnemyData enemyData = MainSceneUtil.enemyTable.getSelectionModel().getSelectedItem();
 		int newID = AccessOfEnemyData.addCopyEnemyData(enemyData);
 		
-		GameTestModule gameTestModule = cbOfMainApp.getgameTestModule();
-		gameTestModule.refreshEnemyList();
+		mainApp.gameTestModule.refreshEnemyList();
 		
 		setEnemyTableData(StageData.enemyList);
 		scrollEnemyTableTo(newID);
@@ -217,11 +201,10 @@ public class TableModule {
 	
 	private void deleteEnemyData(){
 		
-		EnemyData enemyData = enemyTable.getSelectionModel().getSelectedItem();
+		EnemyData enemyData = MainSceneUtil.enemyTable.getSelectionModel().getSelectedItem();
 		AccessOfEnemyData.deleteEnemyData(enemyData);
 		
-		GameTestModule gameTestModule = cbOfMainApp.getgameTestModule();
-		gameTestModule.refreshEnemyList();
+		mainApp.gameTestModule.refreshEnemyList();
 		
 		setEnemyTableData(StageData.enemyList);
 	}

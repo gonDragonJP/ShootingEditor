@@ -15,15 +15,7 @@ import shootingEditor.vector.Int2Vector;
 
 public class GameTestModule {
 	
-	private CallbackOfMainApp cbOfMainApp;
-	
-	private Canvas canvas;
-	private CheckBox checkEnableTex;
-	private Slider slider;
-	private Button resetButton;
-	private Button startButton;
-	private Button stopButton;
-	private TableView<EnemyData> enemyTable;
+	private MainApp mainApp;
 	
 	private Timer timer;
 	private TimerTask timerTask;
@@ -48,28 +40,20 @@ public class GameTestModule {
 	
 	public GameTestModule(MainApp mainApp){
 		
-		cbOfMainApp = mainApp;
-		
-		this.canvas = mainApp.canvas;
-		this.checkEnableTex = mainApp.checkEnableTex;
-		this.slider = mainApp.slider;
-		this.resetButton = mainApp.resetButton;
-		this.startButton = mainApp.startButton;
-		this.stopButton = mainApp.stopButton;
-		this.enemyTable = mainApp.enemyTable;
+		this.mainApp = mainApp;
 	}
 	
 	public void setGameStage(int stageNumber){
 		
-		TableModule tableModule = cbOfMainApp.getTableModule();
-		
 		stageManager.setStage(stageNumber);
 		
-		tableModule.setEventTableData(StageData.eventList);
-		tableModule.setEnemyTableData(StageData.enemyList);
+		mainApp.tableModule.setEventTableData(StageData.eventList);
+		mainApp.tableModule.setEnemyTableData(StageData.enemyList);
 		
 		//AccessOfEventData.addEventList(StageData.eventList);
 		//AccessOfEnemyData.addEnemyList(StageData.enemyList); データベース製作用
+		
+		MainSceneUtil.slider.setMax(StageData.stageEndPoint);
 	}
 	
 	public void refreshEventList(){
@@ -84,8 +68,8 @@ public class GameTestModule {
 	
 	synchronized public void testEnemy(EnemyData enemyData){
 		
-		startButton.setDisable(true);
-		resetButton.setDisable(true);
+		MainSceneUtil.startButton.setDisable(true);
+		MainSceneUtil.resetButton.setDisable(true);
 		
 		stageManager.resetAllEnemies();
 		stageManager.addRootEnemy(enemyData);
@@ -101,7 +85,7 @@ public class GameTestModule {
 	public void refreshQueueOfEvent(){
 		//slider操作時やtableによるpoint変更に伴い呼び出されイベント位置を再設定します
 		
-		double sliderValue = slider.getValue();
+		double sliderValue = MainSceneUtil.slider.getValue();
 		
 		stageManager.updateEventIndex(sliderValue);
 		stageManager.resetAllEnemies();
@@ -109,15 +93,13 @@ public class GameTestModule {
 	
 	synchronized public void updateSlider(){
 		
-		DrawModule drawModule = cbOfMainApp.getdrawModule();
-		
-		drawModule.drawScreen();
+		mainApp.drawModule.drawScreen();
 		refreshQueueOfEvent();
 	}
 	
 	synchronized public void pushResetButton(){
 		
-		slider.setValue(0);
+		MainSceneUtil.slider.setValue(0);
 		updateSlider();
 	}
 	
@@ -137,8 +119,8 @@ public class GameTestModule {
 		if(isTestMode){
 			
 			stageManager.resetAllEnemies();
-			startButton.setDisable(false);
-			resetButton.setDisable(false);
+			MainSceneUtil.startButton.setDisable(false);
+			MainSceneUtil.resetButton.setDisable(false);
 		}
 	}
 	
@@ -148,12 +130,10 @@ public class GameTestModule {
 	}
 	
 	private void makeTimerTask(){
-		
-		DrawModule drawModule = cbOfMainApp.getdrawModule();
 			
 		timerTask = new TimerTask(){
 			
-			double sliderValue = slider.getValue();
+			double sliderValue = MainSceneUtil.slider.getValue();
 			int scrollMax = StageData.stageEndPoint;
 			
 			@Override
@@ -161,7 +141,7 @@ public class GameTestModule {
 				
 				if(isTestMode){
 					
-					drawModule.clearScreen();
+					mainApp.drawModule.clearScreen();
 				}
 				else{
 					
@@ -172,12 +152,13 @@ public class GameTestModule {
 						sliderValue = scrollMax;
 						this.cancel();
 					}
-					slider.setValue(sliderValue);
-					drawModule.drawScreen();
+					MainSceneUtil.slider.setValue(sliderValue);
+					mainApp.drawModule.drawScreen();
 				}
 				
 				stageManager.periodicalProcess(sliderValue, isTestMode);
-				stageManager.drawEnemies(canvas, checkEnableTex.isSelected());
+				stageManager.drawEnemies
+					(MainSceneUtil.canvas, MainSceneUtil.checkEnableTex.isSelected());
 				
 				if(isTestMode){
 					
