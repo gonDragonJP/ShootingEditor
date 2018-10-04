@@ -160,7 +160,8 @@ public class GameTestModule {
 					mainApp.drawModule.drawScreen();
 				}
 				
-				Background.onDraw((int)sliderValue);
+				if(MainSceneUtil.checkEnableBG.isSelected())
+					Background.onDraw((int)sliderValue);
 				
 				stageManager.periodicalProcess(sliderValue, isTestMode);
 				stageManager.drawEnemies
