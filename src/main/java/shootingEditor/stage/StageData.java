@@ -35,6 +35,7 @@ public class StageData {
 		public static DerivativeEnemyFactory derivativeEnemyFactory; 
 		
 		public static TextureSheet[] textureSheets;
+		public static TextureSheet[] backgroundTexSheets;
 		
 		private StageData(){
 		
@@ -51,6 +52,8 @@ public class StageData {
 			
 			textureSheets 
 				= TextureInitializer.getStageEnemyTexSheets(stageNumber);
+			backgroundTexSheets
+				= TextureInitializer.getBackgroundTexSheets(stageNumber);
 			
 			//fileAccess.setEventList(eventList, stageNumber);
 			//fileAccess.setEnemyList(enemyList, stageNumber); //独自ファイルフォーマット読み込み用

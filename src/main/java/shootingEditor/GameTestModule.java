@@ -9,6 +9,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
 import shootingEditor.enemy.EnemyData;
+import shootingEditor.stage.Background;
 import shootingEditor.stage.StageData;
 import shootingEditor.stage.StageManager;
 import shootingEditor.vector.Int2Vector;
@@ -54,6 +55,9 @@ public class GameTestModule {
 		//AccessOfEnemyData.addEnemyList(StageData.enemyList); データベース製作用
 		
 		MainSceneUtil.slider.setMax(StageData.stageEndPoint);
+		
+		Background.setGraphicsContext(MainSceneUtil.canvas);
+		Background.initStage();
 	}
 	
 	public void refreshEventList(){
@@ -155,6 +159,8 @@ public class GameTestModule {
 					MainSceneUtil.slider.setValue(sliderValue);
 					mainApp.drawModule.drawScreen();
 				}
+				
+				Background.onDraw((int)sliderValue);
 				
 				stageManager.periodicalProcess(sliderValue, isTestMode);
 				stageManager.drawEnemies
