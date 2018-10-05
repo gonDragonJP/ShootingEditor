@@ -45,8 +45,6 @@ public class MainApp extends Application{
 		gameTestModule = new GameTestModule(this);
 		
 		initStage(stage);
-
-		gameTestModule.setGameStage(1);
 	}
 	
 	private void initStage(Stage stage){

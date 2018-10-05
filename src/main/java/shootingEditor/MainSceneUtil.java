@@ -1,7 +1,10 @@
 package shootingEditor;
 
+import java.util.logging.Logger;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Scene;
@@ -9,6 +12,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -27,22 +31,28 @@ import shootingEditor.stage.EventData;
 import shootingEditor.stage.EventData.EventCategory;
 import shootingEditor.treeView.TreeContent;
 import shootingEditor.treeView.enemy.TreeEnemyCell;
+import sun.rmi.runtime.Log;
 
 public class MainSceneUtil {
 	
 	public static final int CanvasX = 320;
 	public static final int CanvasY = 500;
 	
+	public static final int stageNumber = 5;
+	
 	public static Canvas canvas = new Canvas(CanvasX, CanvasY);
 	public static CheckBox checkEnableTex = new CheckBox("Enable Texture");
 	public static CheckBox checkEnableBG = new CheckBox("Show Background");
 	public static Slider slider = new Slider(0,0,0);
+	
+	public static ChoiceBox<String> stageChoiceBox = new ChoiceBox<>();
 	public static TextField scrollTextField = new TextField();
 	public static Button resetButton = new Button();
 	public static Button startButton = new Button();
 	public static Button stopButton = new Button();
 	public static Button testEnemyButton = new Button();
 	public static Button storeTreeDataButton = new Button();
+	
 	public static TableView<EventData> eventTable = new TableView<>();
 	public static TableView<EnemyData> enemyTable = new TableView<>();
 	public static TreeView<TreeContent> treeView = new TreeView<>();
@@ -159,13 +169,47 @@ public class MainSceneUtil {
 	
 	private static void addConsole(Pane pane){
 		
-		HBox box = new HBox();
+		VBox box = new VBox();
 		box.setPadding(new Insets(0));
 		box.setSpacing(20);
 		
-		addScrollTextField(box);
-		addConsoleButtons(box);
+		addStageChoiceBox(box);
+		
+		HBox box2 = new HBox();
+		box2.setPadding(new Insets(0));
+		box2.setSpacing(20);
+		
+		addScrollTextField(box2);
+		addConsoleButtons(box2);
+		
+		box.getChildren().add(box2);
 		pane.getChildren().add(box);
+	}
+	
+	private static void addStageChoiceBox(Pane pane){
+		
+		for(int i=0; i<stageNumber; i++){
+			
+			stageChoiceBox.getItems().add(
+					"stage_"+String.valueOf(i+1)
+					);
+		}
+		
+		stageChoiceBox.getSelectionModel().selectedItemProperty().addListener(
+				new ChangeListener<String>(){
+
+					@Override
+					public void changed(ObservableValue<? extends String> observable, String oldValue,
+							String newValue) {
+						
+						int stage = Integer.valueOf(newValue.substring(newValue.length()-1));
+						mainApp.gameTestModule.setGameStage(stage);
+					}}
+				);
+		
+		stageChoiceBox.getSelectionModel().select(0);
+		
+		pane.getChildren().add(stageChoiceBox);
 	}
 	
 	private static void addScrollTextField(Pane pane){
