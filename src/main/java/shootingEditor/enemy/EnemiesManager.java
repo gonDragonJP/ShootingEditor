@@ -2,6 +2,7 @@ package shootingEditor.enemy;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javafx.scene.canvas.Canvas;
 import shootingEditor.CallbackOfMyPlane;
@@ -90,12 +91,8 @@ public class EnemiesManager {
 	
 	private void checkPositionLimit(){
 		
-		int j=enemyList.size()-1;
-		for(int i=j; i>=0; i--){
-			
-			Enemy enemy = enemyList.get(i);
-			if(enemy.isInScreen == false) enemyList.remove(i);
-		}
+		Iterator<Enemy> it = enemyList.iterator();
+		while(it.hasNext()) if(!it.next().isInScreen) it.remove();
 	}
 	
 	public void addRootEnemy(int objectID){

@@ -37,7 +37,7 @@ public class FileAccess {
 		String[] eventFileName ={
 				
 				"event_stage1.txt",
-				"event_stage1.txt",
+				"event_stage2.txt",
 				"event_stage1.txt",
 				"event_stage1.txt",
 				"event_stage1.txt",
@@ -65,7 +65,7 @@ public class FileAccess {
 		String[] enemyFileName ={
 				
 				"enemy_stage1.txt",
-				"enemy_stage1.txt",
+				"enemy_stage2.txt",
 				"enemy_stage1.txt",
 				"enemy_stage1.txt",
 				"enemy_stage1.txt",
