@@ -121,7 +121,7 @@ public class AccessOfEventData {
 		
 		SQLiteManager.initDatabase(databasePath);
 		
-		String sql = "delete from EventData"
+		String sql = "delete from EventData_Stage_"
 				+String.valueOf(stage)+" where ID=";
 		
 		sql += String.valueOf(eventData.getDatabaseID());
