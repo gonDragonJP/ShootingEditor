@@ -70,6 +70,5 @@ public class Background {
 
         scrollPosition = scrollPoint % pictureLength;
         pictureIndex = (scrollPoint / pictureLength) % pictureNumber;
-        System.out.println(pictureIndex);
     }
 }
