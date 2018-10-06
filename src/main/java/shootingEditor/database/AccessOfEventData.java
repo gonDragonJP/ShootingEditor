@@ -11,9 +11,7 @@ public class AccessOfEventData {
 	
 	private static String databasePath = AbsoluteDirectryHolder.getStageManagerDBPath();
 		
-	public static void setEventList(ArrayList<EventData> eventList){
-		
-		int stage = StageData.stage;
+	public static void setEventList(ArrayList<EventData> eventList, int stage){
 		
 		SQLiteManager.initDatabase(databasePath);
 		
@@ -64,9 +62,7 @@ public class AccessOfEventData {
 		
 	}
 	
-	public static void addEventList(ArrayList<EventData> eventList){
-		
-		int stage = StageData.stage;
+	public static void addEventList(ArrayList<EventData> eventList, int stage){
 		
 		SQLiteManager.initDatabase(databasePath);
 		
@@ -78,9 +74,7 @@ public class AccessOfEventData {
 		SQLiteManager.closeDatabase();
 	}
 	
-	public static void addEventData(EventData eventData){
-		
-		int stage = StageData.stage;
+	public static void addEventData(EventData eventData, int stage){
 		
 		SQLiteManager.initDatabase(databasePath);
 			
@@ -106,9 +100,7 @@ public class AccessOfEventData {
 		SQLiteManager.update(sql);
 	}
 	
-	public static void addNewEventData(){
-		
-		int stage = StageData.stage;
+	public static void addNewEventData(int stage){
 		
 		SQLiteManager.initDatabase(databasePath);
 		
@@ -125,9 +117,7 @@ public class AccessOfEventData {
 		return eventData;
 	}
 	
-	public static void deleteEventData(EventData eventData){
-		
-		int stage = StageData.stage;
+	public static void deleteEventData(EventData eventData, int stage){
 		
 		SQLiteManager.initDatabase(databasePath);
 		

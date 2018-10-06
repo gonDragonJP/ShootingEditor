@@ -114,7 +114,7 @@ public class TableModule {
 	
 	private void addNewEventData(){
 		
-		AccessOfEventData.addNewEventData();
+		AccessOfEventData.addNewEventData(StageData.stage);
 		
 		mainApp.gameTestModule.refreshEventList();
 		
@@ -125,7 +125,7 @@ public class TableModule {
 	private void deleteEventData(){
 		
 		EventData eventData = MainSceneUtil.eventTable.getSelectionModel().getSelectedItem();
-		AccessOfEventData.deleteEventData(eventData);
+		AccessOfEventData.deleteEventData(eventData, StageData.stage);
 	
 		mainApp.gameTestModule.refreshEventList();
 		
@@ -173,7 +173,7 @@ public class TableModule {
 		EnemyCategory newDataCategory = 
 					(selectedData == null) ? EnemyCategory.FLYING : selectedData.getCategory();
 		
-		int newID = AccessOfEnemyData.addNewEnemyData(newDataCategory);
+		int newID = AccessOfEnemyData.addNewEnemyData(newDataCategory, StageData.stage);
 		
 		mainApp.gameTestModule.refreshEnemyList();
 		
@@ -191,7 +191,7 @@ public class TableModule {
 	private void addCopyEnemyData(){
 		
 		EnemyData enemyData = MainSceneUtil.enemyTable.getSelectionModel().getSelectedItem();
-		int newID = AccessOfEnemyData.addCopyEnemyData(enemyData);
+		int newID = AccessOfEnemyData.addCopyEnemyData(enemyData, StageData.stage);
 		
 		mainApp.gameTestModule.refreshEnemyList();
 		
@@ -202,7 +202,7 @@ public class TableModule {
 	private void deleteEnemyData(){
 		
 		EnemyData enemyData = MainSceneUtil.enemyTable.getSelectionModel().getSelectedItem();
-		AccessOfEnemyData.deleteEnemyData(enemyData);
+		AccessOfEnemyData.deleteEnemyData(enemyData, StageData.stage);
 		
 		mainApp.gameTestModule.refreshEnemyList();
 		

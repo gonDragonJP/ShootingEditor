@@ -22,9 +22,7 @@ public class AccessOfEnemyData {
 	
 	private static String databasePath = AbsoluteDirectryHolder.getStageManagerDBPath();
 	
-	public static void setEnemyList(ArrayList<EnemyData> enemyList){
-		
-		int stage = StageData.stage;
+	public static void setEnemyList(ArrayList<EnemyData> enemyList, int stage){
 		
 		SQLiteManager.initDatabase(databasePath);
 		
@@ -239,9 +237,7 @@ public class AccessOfEnemyData {
 		}
 	}
 	
-	public static void addEnemyList(ArrayList<EnemyData> enemyList){
-		
-		int stage = StageData.stage;
+	public static void addEnemyList(ArrayList<EnemyData> enemyList, int stage){
 		
 		SQLiteManager.initDatabase(databasePath);
 		
@@ -253,9 +249,7 @@ public class AccessOfEnemyData {
 		SQLiteManager.closeDatabase();
 	}
 	
-	public static void addEnemyData(EnemyData enemyData){
-		
-		int stage = StageData.stage;
+	public static void addEnemyData(EnemyData enemyData, int stage){
 		
 		SQLiteManager.initDatabase(databasePath);
 			
@@ -433,9 +427,7 @@ public class AccessOfEnemyData {
 		SQLiteManager.update(sql);
 	}
 	
-	public static int addNewEnemyData(EnemyCategory category){
-		
-		int stage = StageData.stage;
+	public static int addNewEnemyData(EnemyCategory category, int stage){
 		
 		SQLiteManager.initDatabase(databasePath);
 		
@@ -458,10 +450,8 @@ public class AccessOfEnemyData {
 		return enemyData;
 	}
 	
-	public static int addCopyEnemyData(EnemyData enemyData){
-		
-		int stage = StageData.stage;
-		
+	public static int addCopyEnemyData(EnemyData enemyData, int stage){
+	
 		SQLiteManager.initDatabase(databasePath);
 		
 		EnemyData copyData = generateCopyEnemyData(enemyData);
@@ -488,9 +478,7 @@ public class AccessOfEnemyData {
 		enemyData.objectID = latestID;
 	}
 	
-	public static void deleteEnemyData(EnemyData enemyData){
-		
-		int stage = StageData.stage;
+	public static void deleteEnemyData(EnemyData enemyData, int stage){
 		
 		SQLiteManager.initDatabase(databasePath);
 		
@@ -525,9 +513,7 @@ public class AccessOfEnemyData {
 		}
 	}
 	
-	public static boolean checkExistSameObjectID(int objectID){
-		
-		int stage = StageData.stage;
+	public static boolean checkExistSameObjectID(int objectID, int stage){
 		
 		SQLiteManager.initDatabase(databasePath);
 		

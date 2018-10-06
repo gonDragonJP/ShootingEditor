@@ -57,15 +57,15 @@ public class TreeModule {
 	public void storeEnemyDataToDB(){
 		
 		int id = tempEnemyDataForEdit.objectID;
-		boolean isExist = AccessOfEnemyData.checkExistSameObjectID(id);
+		boolean isExist = AccessOfEnemyData.checkExistSameObjectID(id, StageData.stage);
 		
 		if(isExist){
 			if (!checkOverwritePermission()) return;
 			
-			AccessOfEnemyData.deleteEnemyData(tempEnemyDataForEdit);;
+			AccessOfEnemyData.deleteEnemyData(tempEnemyDataForEdit,StageData.stage);
 		}
 		
-		AccessOfEnemyData.addEnemyData(tempEnemyDataForEdit);
+		AccessOfEnemyData.addEnemyData(tempEnemyDataForEdit, StageData.stage);
 		
 		mainApp.gameTestModule.refreshEnemyList();
 		
@@ -89,7 +89,7 @@ public class TreeModule {
 	
 	public void storeEventDataToDB(){
 		
-		AccessOfEventData.addEventData(tempEventDataForEdit);
+		AccessOfEventData.addEventData(tempEventDataForEdit, StageData.stage);
 	
 		mainApp.gameTestModule.refreshEventList();
 		

@@ -61,8 +61,8 @@ public class StageData {
 			refreshEventListFromDB();
 			refreshEnemyListFromDB();
 			
-			//AccessOfEventData.addEventList(eventList);
-			//AccessOfEnemyData.addEnemyList(enemyList);　//DBへリスト書き込み
+			//AccessOfEventData.addEventList(eventList, stage);
+			//AccessOfEnemyData.addEnemyList(enemyList, stage);　//DBへリスト書き込み
 			
 			derivativeEnemyFactory = new DerivativeEnemyFactory(stageNumber);
 		}
@@ -70,13 +70,13 @@ public class StageData {
 		public static void refreshEventListFromDB(){
 			
 			eventList.clear();
-			AccessOfEventData.setEventList(eventList);
+			AccessOfEventData.setEventList(eventList, stage);
 		}
 		
 		public static void refreshEnemyListFromDB(){
 			
 			enemyList.clear();
-			AccessOfEnemyData.setEnemyList(enemyList);
+			AccessOfEnemyData.setEnemyList(enemyList, stage);
 		}
 		
 		public static boolean isLastStage(){
