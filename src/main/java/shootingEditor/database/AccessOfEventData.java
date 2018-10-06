@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import shootingEditor.stage.EventData;
+import shootingEditor.stage.StageData;
 
 public class AccessOfEventData {
 	
@@ -12,12 +13,15 @@ public class AccessOfEventData {
 		
 	public static void setEventList(ArrayList<EventData> eventList){
 		
+		int stage = StageData.stage;
+		
 		SQLiteManager.initDatabase(databasePath);
 		
 		String sql;
 		ResultSet resultSet;
 		
-		sql = "select * from EventData order by scrollPoint;";
+		sql = "select * from EventData_Stage_"
+				+String.valueOf(stage)+" order by scrollPoint;";
 		resultSet = SQLiteManager.getResultSet(sql);
 		 
 		try {
@@ -62,11 +66,13 @@ public class AccessOfEventData {
 	
 	public static void addEventList(ArrayList<EventData> eventList){
 		
+		int stage = StageData.stage;
+		
 		SQLiteManager.initDatabase(databasePath);
 		
 		for(EventData e: eventList){
 			
-			add(e);
+			add(e, stage);
 		}
 		
 		SQLiteManager.closeDatabase();
@@ -74,16 +80,19 @@ public class AccessOfEventData {
 	
 	public static void addEventData(EventData eventData){
 		
+		int stage = StageData.stage;
+		
 		SQLiteManager.initDatabase(databasePath);
 			
-		add(eventData);
+		add(eventData, stage);
 		
 		SQLiteManager.closeDatabase();
 	}
 	
-	private static void add(EventData eventData){
+	private static void add(EventData eventData, int stage){
 		
-		String sql = "insert into EventData values(";
+		String sql = "insert into EventData_Stage_"
+				+String.valueOf(stage)+" values(";
 		
 		sql += "NULL,";
 		sql += String.valueOf(eventData.scrollPoint) +",";
@@ -99,9 +108,11 @@ public class AccessOfEventData {
 	
 	public static void addNewEventData(){
 		
+		int stage = StageData.stage;
+		
 		SQLiteManager.initDatabase(databasePath);
 		
-		add(generateNewEventData());
+		add(generateNewEventData(), stage);
 		
 		SQLiteManager.closeDatabase();
 	}
@@ -116,9 +127,12 @@ public class AccessOfEventData {
 	
 	public static void deleteEventData(EventData eventData){
 		
+		int stage = StageData.stage;
+		
 		SQLiteManager.initDatabase(databasePath);
 		
-		String sql = "delete from EventData where ID=";
+		String sql = "delete from EventData"
+				+String.valueOf(stage)+" where ID=";
 		
 		sql += String.valueOf(eventData.getDatabaseID());
 		

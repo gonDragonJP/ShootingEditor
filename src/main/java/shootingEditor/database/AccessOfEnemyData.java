@@ -24,6 +24,8 @@ public class AccessOfEnemyData {
 	
 	public static void setEnemyList(ArrayList<EnemyData> enemyList){
 		
+		int stage = StageData.stage;
+		
 		SQLiteManager.initDatabase(databasePath);
 		
 		String sql;
@@ -32,7 +34,8 @@ public class AccessOfEnemyData {
 		// ResultSetが単一オブジェクトの為、ネストでクエリ呼び出しすると正常に作動しない
 		// ネストを避ける為、結果の一時退避用に使用しています
 		
-		sql = "select objectID from BasicData ;";
+		sql = "select objectID from BasicData_Stage_"
+				+String.valueOf(stage)+" ;";
 		resultSet = SQLiteManager.getResultSet(sql);
 		 
 		
@@ -45,7 +48,7 @@ public class AccessOfEnemyData {
 			
 			for(int e: stackList){
 				
-				enemyList.add(generateEnemyData(e));
+				enemyList.add(generateEnemyData(e, stage));
 			}
 			
 		} catch (SQLException e) {
@@ -56,43 +59,48 @@ public class AccessOfEnemyData {
 		SQLiteManager.closeDatabase();
 	}
 	
-	private static EnemyData generateEnemyData(int objectID){
+	private static EnemyData generateEnemyData(int objectID, int stage){
 		
 		EnemyData enemyData = new EnemyData();
 		
 		enemyData.objectID = objectID;
-		setEnemyData(enemyData);
+		setEnemyData(enemyData, stage);
 		
 		return enemyData;
 	}
 	
-	private static void setEnemyData(EnemyData enemyData){
+	private static void setEnemyData(EnemyData enemyData, int stage){
 		
 		String sql;
 		ResultSet resultSet;
 		String objectID =String.valueOf(enemyData.objectID);
 		
-		 sql = "select * from BasicData where objectID="+objectID+";";
+		 sql = "select * from BasicData_Stage_"
+				 +String.valueOf(stage)+" where objectID="+objectID+";";
 		 resultSet = SQLiteManager.getResultSet(sql);
 		
 		setBasicData(enemyData, resultSet);
 		
-		sql = "select * from MovingNode where parentID="+objectID+";";
+		sql = "select * from MovingNode_Stage_"
+				+String.valueOf(stage)+" where parentID="+objectID+";";
 		 resultSet = SQLiteManager.getResultSet(sql);
 		 
 		setMovingNode(enemyData, resultSet);
 		
-		sql = "select * from GeneratorNode where parentID="+objectID+";";
+		sql = "select * from GeneratorNode_Stage_"
+				+String.valueOf(stage)+" where parentID="+objectID+";";
 		 resultSet = SQLiteManager.getResultSet(sql);
 		 
 		setGeneratorNode(enemyData, resultSet);
 		
-		sql = "select * from CollisionNode where parentID="+objectID+";";
+		sql = "select * from CollisionNode_Stage_"
+				+String.valueOf(stage)+" where parentID="+objectID+";";
 		 resultSet = SQLiteManager.getResultSet(sql);
 		 
 		setCollisionNode(enemyData, resultSet);
 		
-		sql = "select * from AnimationData where parentID="+objectID+";";
+		sql = "select * from AnimationData_Stage_"
+				+String.valueOf(stage)+" where parentID="+objectID+";";
 		 resultSet = SQLiteManager.getResultSet(sql);
 		 
 		setAnimationData(enemyData, resultSet);
@@ -233,11 +241,13 @@ public class AccessOfEnemyData {
 	
 	public static void addEnemyList(ArrayList<EnemyData> enemyList){
 		
+		int stage = StageData.stage;
+		
 		SQLiteManager.initDatabase(databasePath);
 		
 		for(EnemyData e: enemyList){
 			
-			add(e);
+			add(e, stage);
 		}
 		
 		SQLiteManager.closeDatabase();
@@ -245,45 +255,49 @@ public class AccessOfEnemyData {
 	
 	public static void addEnemyData(EnemyData enemyData){
 		
+		int stage = StageData.stage;
+		
 		SQLiteManager.initDatabase(databasePath);
 			
-		add(enemyData);
+		add(enemyData, stage);
 		
 		SQLiteManager.closeDatabase();
 	}
 	
-	private static void add(EnemyData enemyData){
+	private static void add(EnemyData enemyData, int stage){
 		
 		int  parentID = enemyData.objectID;
 		int  nodeIndex;
 		
-		addBasicData(enemyData);
+		addBasicData(enemyData, stage);
 			
 		for(MovingNode e: enemyData.node){
 				
 			nodeIndex = enemyData.node.indexOf(e);
 				
-			addMovingNode(parentID, nodeIndex, e);
+			addMovingNode(parentID, nodeIndex, e, stage);
 		}
 			
 		for(GeneratingChild e: enemyData.generator){
 				
 			nodeIndex = enemyData.generator.indexOf(e);
 				
-			addGeneratorNode(parentID, nodeIndex, e);
+			addGeneratorNode(parentID, nodeIndex, e, stage);
 		}
 			
 		for(CollisionRegion e: enemyData.collision){
 				
 			nodeIndex = enemyData.collision.indexOf(e);
 				
-			addCollisionNode(parentID, nodeIndex, e);
+			addCollisionNode(parentID, nodeIndex, e, stage);
 		}
 		
 		int keyNode =-1;
 		
-		addAnimationData(parentID, keyNode, AnimeKind.NORMAL, enemyData.animationSet.normalAnime);
-		addAnimationData(parentID, keyNode, AnimeKind.EXPLOSION, enemyData.animationSet.explosionAnime);
+		addAnimationData
+		(parentID, keyNode, AnimeKind.NORMAL, enemyData.animationSet.normalAnime, stage);
+		addAnimationData
+		(parentID, keyNode, AnimeKind.EXPLOSION, enemyData.animationSet.explosionAnime, stage);
 		
 		Set<Integer> keySet = enemyData.animationSet.nodeActionAnime.keySet();
 		
@@ -292,13 +306,15 @@ public class AccessOfEnemyData {
 			keyNode = e;
 			AnimationData animeData = enemyData.animationSet.nodeActionAnime.get(e);
 			
-			addAnimationData(parentID, keyNode, AnimeKind.NODEACTION, animeData);
+			addAnimationData
+			(parentID, keyNode, AnimeKind.NODEACTION, animeData, stage);
 		}
 	}
 
-	private static void addBasicData(EnemyData enemyData){
+	private static void addBasicData(EnemyData enemyData, int stage){
 		
-		String sql = "insert into BasicData values(";
+		String sql = "insert into BasicData_Stage_"
+				+String.valueOf(stage)+" values(";
 		
 		sql += String.valueOf(enemyData.objectID) +",";
 		sql += "'"+ enemyData.name +"',";
@@ -321,9 +337,11 @@ public class AccessOfEnemyData {
 		SQLiteManager.update(sql);
 	}
 	
-	private static void addMovingNode(int parentID, int nodeIndex, MovingNode node){
+	private static void addMovingNode
+	(int parentID, int nodeIndex, MovingNode node, int stage){
 		
-		String sql = "insert into MovingNode values(";
+		String sql = "insert into MovingNode_Stage_"
+				+String.valueOf(stage)+" values(";
 		
 		sql += String.valueOf(parentID) +",";
 		sql += String.valueOf(nodeIndex) +",";
@@ -346,9 +364,11 @@ public class AccessOfEnemyData {
 		SQLiteManager.update(sql);
 	}
 	
-	private static void addGeneratorNode(int parentID, int nodeIndex, GeneratingChild node){
+	private static void addGeneratorNode
+	(int parentID, int nodeIndex, GeneratingChild node, int stage){
 		
-		String sql = "insert into GeneratorNode values(";
+		String sql = "insert into GeneratorNode_Stage_"
+				+String.valueOf(stage)+" values(";
 		
 		sql += String.valueOf(parentID) +",";
 		sql += String.valueOf(nodeIndex) +",";
@@ -366,9 +386,11 @@ public class AccessOfEnemyData {
 		SQLiteManager.update(sql);
 	}
 	
-	private static void addCollisionNode(int parentID, int nodeIndex, CollisionRegion node){
+	private static void addCollisionNode
+	(int parentID, int nodeIndex, CollisionRegion node, int stage){
 		
-		String sql = "insert into CollisionNode values(";
+		String sql = "insert into CollisionNode_Stage_"
+				+String.valueOf(stage)+" values(";
 		
 		sql += String.valueOf(parentID) +",";
 		sql += String.valueOf(nodeIndex) +",";
@@ -384,9 +406,11 @@ public class AccessOfEnemyData {
 		SQLiteManager.update(sql);
 	}
 
-	private static void addAnimationData(int parentID, int keyNode, AnimeKind animeKind, AnimationData animeData){
+	private static void addAnimationData
+	(int parentID, int keyNode, AnimeKind animeKind, AnimationData animeData, int stage){
 		
-		String sql = "insert into AnimationData values(";
+		String sql = "insert into AnimationData_Stage_"
+				+String.valueOf(stage)+" values(";
 		
 		sql += String.valueOf(parentID) +",";
 		sql += String.valueOf(animeKind.getID()) +",";
@@ -411,13 +435,15 @@ public class AccessOfEnemyData {
 	
 	public static int addNewEnemyData(EnemyCategory category){
 		
+		int stage = StageData.stage;
+		
 		SQLiteManager.initDatabase(databasePath);
 		
 		EnemyData newData = generateNewEnemyData();
 		newData.objectID = category.getID() * 1000;
 		
 		changeToLatestID(newData);
-		add(newData);
+		add(newData, stage);
 		
 		SQLiteManager.closeDatabase();
 		
@@ -434,12 +460,14 @@ public class AccessOfEnemyData {
 	
 	public static int addCopyEnemyData(EnemyData enemyData){
 		
+		int stage = StageData.stage;
+		
 		SQLiteManager.initDatabase(databasePath);
 		
 		EnemyData copyData = generateCopyEnemyData(enemyData);
 		
 		changeToLatestID(copyData);
-		add(copyData);
+		add(copyData, stage);
 		
 		SQLiteManager.closeDatabase();
 		
@@ -462,21 +490,24 @@ public class AccessOfEnemyData {
 	
 	public static void deleteEnemyData(EnemyData enemyData){
 		
+		int stage = StageData.stage;
+		
 		SQLiteManager.initDatabase(databasePath);
 		
-		String sql = "delete from BasicData where objectID=";
+		String sql = "delete from BasicData_Stage_"
+				+String.valueOf(stage)+" where objectID=";
 		sql += String.valueOf(enemyData.objectID);
 		sql += ";";
 		
 		System.out.println(sql);
 		SQLiteManager.update(sql);
 		
-		deleteChildData(enemyData);
+		deleteChildData(enemyData, stage);
 		
 		SQLiteManager.closeDatabase();
 	}
 	
-	private static void deleteChildData(EnemyData enemyData){
+	private static void deleteChildData(EnemyData enemyData, int stage){
 		
 		String sql;
 		String[] childTable 
@@ -484,7 +515,8 @@ public class AccessOfEnemyData {
 		
 		for(String e: childTable ){
 		
-			sql = "delete from " + e +" where parentID=";
+			sql = "delete from " + e +"_Stage_"
+					+String.valueOf(stage)+" where parentID=";
 			sql += String.valueOf(enemyData.objectID);
 			sql += ";";
 		
@@ -495,13 +527,16 @@ public class AccessOfEnemyData {
 	
 	public static boolean checkExistSameObjectID(int objectID){
 		
+		int stage = StageData.stage;
+		
 		SQLiteManager.initDatabase(databasePath);
 		
 		String sql;
 		ResultSet resultSet;
 		boolean result = false;
 		
-		sql = "select * from BasicData where objectID="+objectID+";";
+		sql = "select * from BasicData_Stage_"
+				+String.valueOf(stage)+" where objectID="+objectID+";";
 		resultSet = SQLiteManager.getResultSet(sql);
 		
 		try {

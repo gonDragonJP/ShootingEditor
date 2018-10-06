@@ -61,6 +61,9 @@ public class StageData {
 			refreshEventListFromDB();
 			refreshEnemyListFromDB();
 			
+			//AccessOfEventData.addEventList(eventList);
+			//AccessOfEnemyData.addEnemyList(enemyList);@//DB‚ÖƒŠƒXƒg‘‚«‚İ
+			
 			derivativeEnemyFactory = new DerivativeEnemyFactory(stageNumber);
 		}
 		
