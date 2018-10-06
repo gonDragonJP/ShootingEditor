@@ -18,7 +18,6 @@ public class AccessOfTextureData {
 	private static final String imageDir = databaseDir + "image\\";
 	
 	private static final String basicTextureTableName = "TextureTable_Stage_";
-	public static int stage = 1;
 	
 	private AccessOfTextureData(){
 	
@@ -29,19 +28,19 @@ public class AccessOfTextureData {
 		return imageDir;
 	}
 	
-	private static String getTableName(){
+	private static String getTableName(int stage){
 		
 		return basicTextureTableName + String.valueOf(stage);
 	}
 	
-	public static void setTexDataList(List<TextureSheet> texSheetList, int stageNumber){
+	public static void setTexDataList(List<TextureSheet> texSheetList, int stage){
 		
 		SQLiteManager.initDatabase(databasePath);
 		
 		String sql;
 		ResultSet resultSet;
 		
-		sql = "select * from "+getTableName()+" order by textureID;";
+		sql = "select * from "+getTableName(stage)+" order by textureID;";
 		resultSet = SQLiteManager.getResultSet(sql);
 		 
 		try {

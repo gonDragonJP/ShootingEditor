@@ -62,7 +62,7 @@ public class StageData {
 			refreshEnemyListFromDB();
 			
 			//AccessOfEventData.addEventList(eventList, stage);
-			//AccessOfEnemyData.addEnemyList(enemyList, stage);　//DBへリスト書き込み
+			//AccessOfEnemyData.addEnemyList(enemyList, stage); //DBへリスト書き込み
 			
 			derivativeEnemyFactory = new DerivativeEnemyFactory(stageNumber);
 		}

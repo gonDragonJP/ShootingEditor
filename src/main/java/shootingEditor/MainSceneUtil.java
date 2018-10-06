@@ -38,7 +38,7 @@ public class MainSceneUtil {
 	public static final int CanvasX = 320;
 	public static final int CanvasY = 500;
 	
-	public static final int stageNumber = 5;
+	public static final int stageNumber = 2;
 	
 	public static Canvas canvas = new Canvas(CanvasX, CanvasY);
 	public static CheckBox checkEnableTex = new CheckBox("Enable Texture");
@@ -207,7 +207,7 @@ public class MainSceneUtil {
 					}}
 				);
 		
-		stageChoiceBox.getSelectionModel().select(0);
+		stageChoiceBox.getSelectionModel().select(0); //choicebox‚Ì0”Ô–Úistage1j‚É‰Šú‰»
 		
 		pane.getChildren().add(stageChoiceBox);
 	}

@@ -1,5 +1,7 @@
 package shootingEditor.stage;
 
+import com.sun.istack.internal.logging.Logger;
+
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -46,7 +48,7 @@ public class Background {
         drawOnePicture(scrollPosition);
 
         // ‘±‚­ƒXƒNƒ[ƒ‹‚ğã‚É•`Ê
-        int preIndex = (pictureIndex -1) <0 ? pictureNumber -1 : pictureIndex -1;
+        int preIndex = (pictureIndex+1)==pictureNumber ? 0 : pictureIndex +1;
         drawSheet = StageData.backgroundTexSheets[preIndex];
         drawOnePicture(scrollPosition - pictureLength);
     }
@@ -68,5 +70,6 @@ public class Background {
 
         scrollPosition = scrollPoint % pictureLength;
         pictureIndex = (scrollPoint / pictureLength) % pictureNumber;
+        System.out.println(pictureIndex);
     }
 }
