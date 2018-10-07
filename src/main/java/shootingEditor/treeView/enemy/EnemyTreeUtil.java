@@ -50,6 +50,7 @@ public class EnemyTreeUtil {
 		
 		root = treeItem;
 		
+		/*
 		for(Entry e : Entry.values()){
 		
 			if(e.category == TreeEnemyEntry.EntryCategory.BASIC_DATA){
@@ -58,6 +59,13 @@ public class EnemyTreeUtil {
 				treeItem = new TreeItem<TreeContent>(treeData);
 				root.getChildren().add(treeItem);
 			}
+		}*/
+		
+		for(BasicDataContent.Fields e : BasicDataContent.Fields.values()) {
+			
+			treeData = BasicDataContent.create(e, enemyData);
+			treeItem = new TreeItem<TreeContent>(treeData);
+			root.getChildren().add(treeItem);
 		}
 	}
 	
