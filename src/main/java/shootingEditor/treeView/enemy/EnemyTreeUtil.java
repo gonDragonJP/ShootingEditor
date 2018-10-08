@@ -11,6 +11,10 @@ import shootingEditor.enemy.EnemyData;
 import shootingEditor.treeView.TreeContent;
 import shootingEditor.treeView.TreeContent.ContentCategory;
 import shootingEditor.treeView.enemy.TreeEnemyGroup.GroupType;
+import shootingEditor.treeView.enemy.content.BasicDataContent;
+import shootingEditor.treeView.enemy.content.CollisionNodeContent;
+import shootingEditor.treeView.enemy.content.GeneratorNodeContent;
+import shootingEditor.treeView.enemy.content.MovingNodeContent;
 import shootingEditor.treeView.enemy.TreeEnemyEntry.EntryCategory;
 import shootingEditor.treeView.enemy.TreeEnemyEntry.Entry;
 
@@ -177,18 +181,31 @@ public class EnemyTreeUtil {
 		
 		switch(groupType){
 		
-		case MOVING_CHILD:	itemCategory = EntryCategory.MOVING_DATA;
+		case MOVING_CHILD:
+			for(MovingNodeContent.Fields e : MovingNodeContent.Fields.values()){
+				treeItem.getChildren().add(new TreeItem(
+						MovingNodeContent.create(e, enemyData.node.get(index))));
+			}
 			break;
 			
-		case GENERATOR_CHILD:	itemCategory = EntryCategory.GENERATOR_DATA;
+		case GENERATOR_CHILD:
+			for(GeneratorNodeContent.Fields e : GeneratorNodeContent.Fields.values()){
+				treeItem.getChildren().add(new TreeItem(
+					GeneratorNodeContent.create(e, enemyData.generator.get(index))));
+			}
 			break;
 			
-		case COLLISION_CHILD:	itemCategory = EntryCategory.COLLISION_DATA;
+		case COLLISION_CHILD:
+			for(CollisionNodeContent.Fields e : CollisionNodeContent.Fields.values()){
+				treeItem.getChildren().add(new TreeItem(
+					CollisionNodeContent.create(e, enemyData.collision.get(index))));
+			}
 			break;
+			
 		default:
 		}
 			
-		addMutableItem(treeItem, itemCategory);
+		//addMutableItem(treeItem, itemCategory);
 	}
 	
 	private static void addMutableItem
