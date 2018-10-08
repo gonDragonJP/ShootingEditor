@@ -57,17 +57,6 @@ public class EnemyTreeUtil {
 		
 		root = treeItem;
 		
-		/*
-		for(Entry e : Entry.values()){
-		
-			if(e.category == TreeEnemyEntry.EntryCategory.BASIC_DATA){
-				
-				treeData = new TreeEnemyEntry(enemyData, e);
-				treeItem = new TreeItem<TreeContent>(treeData);
-				root.getChildren().add(treeItem);
-			}
-		}*/
-		
 		for(BasicDataContent.Fields e : BasicDataContent.Fields.values()) {
 			
 			treeData = BasicDataContent.create(e, enemyData);
@@ -89,20 +78,18 @@ public class EnemyTreeUtil {
 			case GENERATOR:
 			case COLLISION:
 				treeData = new TreeEnemyGroup(enemyData,e);
-				treeItem = new MyTreeItem(treeData);
+				treeItem = new EnemyTreeItem(treeData);
+				root.getChildren().add(treeItem);
 				
 				addGroupChild(treeItem, e);
-				
-				root.getChildren().add(treeItem);
 				break;
 				
 			case ANIMATION:
 				treeData = new TreeEnemyGroup(enemyData,e);
 				treeItem = new TreeItem<TreeContent>(treeData);
-				
-				addAnimationGroup(treeItem);
-				
 				root.getChildren().add(treeItem);
+				
+				addAnimationSubGroups(treeItem);
 				break;
 				
 			default:
@@ -110,7 +97,7 @@ public class EnemyTreeUtil {
 		}
 	}
 	
-	private static void addAnimationGroup(TreeItem<TreeContent> root){
+	private static void addAnimationSubGroups(TreeItem<TreeContent> root){
 		
 		TreeContent treeData;
 		TreeItem<TreeContent> treeItem;
@@ -130,7 +117,7 @@ public class EnemyTreeUtil {
 		addAnimationItem(treeItem, animeSet.explosionAnime);
 		
 		treeData = new TreeEnemyGroup(enemyData, GroupType.NODE_ANIME);
-		treeItem = new MyTreeItem(treeData);
+		treeItem = new EnemyTreeItem(treeData);
 		root.getChildren().add(treeItem);
 		addGroupChild(treeItem, GroupType.ANIMATION);
 	}
@@ -176,55 +163,34 @@ public class EnemyTreeUtil {
 	public static void addAChild
 	(TreeItem<TreeContent> root, GroupType groupType, int index){
 		
-		TreeEnemyGroup  childGroup = new TreeEnemyGroup(enemyData, groupType, index, -1);
-		MyTreeItem treeItem = new MyTreeItem(childGroup);
+		TreeEnemyGroup  childGroup = new TreeEnemyGroup(enemyData, groupType, index);
+		EnemyTreeItem treeItem = new EnemyTreeItem(childGroup);
 		root.getChildren().add(treeItem);
-		
-		EntryCategory itemCategory = null;
 		
 		switch(groupType){
 		
 		case MOVING_CHILD:
 			for(MovingNodeContent.Fields e : MovingNodeContent.Fields.values()){
-				treeItem.getChildren().add(new TreeItem(
+				treeItem.getChildren().add(new TreeItem<>(
 						MovingNodeContent.create(e, enemyData.node.get(index))));
 			}
 			break;
 			
 		case GENERATOR_CHILD:
 			for(GeneratorNodeContent.Fields e : GeneratorNodeContent.Fields.values()){
-				treeItem.getChildren().add(new TreeItem(
+				treeItem.getChildren().add(new TreeItem<>(
 					GeneratorNodeContent.create(e, enemyData.generator.get(index))));
 			}
 			break;
 			
 		case COLLISION_CHILD:
 			for(CollisionNodeContent.Fields e : CollisionNodeContent.Fields.values()){
-				treeItem.getChildren().add(new TreeItem(
+				treeItem.getChildren().add(new TreeItem<>(
 					CollisionNodeContent.create(e, enemyData.collision.get(index))));
 			}
 			break;
 			
 		default:
-		}
-			
-		//addMutableItem(treeItem, itemCategory);
-	}
-	
-	private static void addMutableItem
-		(TreeItem<TreeContent> root, EntryCategory entryCategory){
-
-		TreeEnemyEntry item;
-		TreeItem<TreeContent> treeItem;
-		
-		for(Entry e : Entry.values()){
-		
-			if(e.category == entryCategory){
-		
-				item = new TreeEnemyEntry((TreeEnemyGroup)root.getValue(), enemyData, e);
-				treeItem  = new TreeItem<TreeContent>(item);
-				root.getChildren().add(treeItem);
-			}
 		}
 	}
 	
@@ -233,7 +199,7 @@ public class EnemyTreeUtil {
 		
 		for(AnimationNodeContent.Fields e : AnimationNodeContent.Fields.values()) {
 			
-			root.getChildren().add(new TreeItem(
+			root.getChildren().add(new TreeItem<>(
 					AnimationNodeContent.create(e, data)));
 		}
 	}
@@ -245,20 +211,20 @@ public class EnemyTreeUtil {
 		
 		for(int e: keySet){
 			
-			addAChildOfNodeAnime(root, childIndex, e);
+			addChildOfNodeAnime(root, childIndex, e);
 			
 			childIndex++;
 		}
 	}
 	
-	public static void addAChildOfNodeAnime(TreeItem<TreeContent> root, int childIndex, int keyNode){
+	public static void addChildOfNodeAnime(TreeItem<TreeContent> root, int childIndex, int keyNode){
 		
 		TreeEnemyGroup childGroup;
 		TreeItem<TreeContent> treeItem;
 		
 		childGroup = new TreeEnemyGroup
 				(enemyData, TreeEnemyGroup.GroupType.NODEANIME_CHILD, childIndex, keyNode);
-		treeItem = new MyTreeItem(childGroup);
+		treeItem = new EnemyTreeItem(childGroup);
 		root.getChildren().add(treeItem);
 		
 		addItemOfNodeAnime(treeItem, keyNode);

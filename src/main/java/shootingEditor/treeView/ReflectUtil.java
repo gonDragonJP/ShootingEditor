@@ -4,6 +4,20 @@ import java.lang.reflect.Field;
 
 public class ReflectUtil {
 	
+	public static Object getSuperType(Object object, String fieldName) {
+		
+		Class clazz = object.getClass();
+		Field fielz = null;
+		
+		try {
+			fielz = clazz.getDeclaredField(fieldName);
+			
+		} catch (NoSuchFieldException | SecurityException e) {e.printStackTrace();}
+		
+		
+		return fielz.getType();
+	}
+	
 	public static String getFieldType(Object object, String fieldName) {
 		
 		Class clazz = object.getClass();

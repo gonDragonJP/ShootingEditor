@@ -3,7 +3,6 @@ package shootingEditor.treeView.enemy.content;
 import shootingEditor.enemy.EnemyData;
 import shootingEditor.treeView.ReflectUtil;
 import shootingEditor.treeView.TreeContent;
-import shootingEditor.treeView.TreeContent.ContentCategory;
 
 	public class EntryContent extends TreeContent{
 
@@ -70,10 +69,6 @@ import shootingEditor.treeView.TreeContent.ContentCategory;
 			valueText = 
 				ReflectUtil.getReflectedSimpleValue(referObject, fieldName);
 		}
-		
-		if(fieldName == "startPosAttrib") 
-			valueText = EnemyData.StartPositionAtrib
-			.getFromID(Integer.valueOf(valueText)).toString();
 	}
 	
 	public boolean setEnemyDataByAText(String text) {

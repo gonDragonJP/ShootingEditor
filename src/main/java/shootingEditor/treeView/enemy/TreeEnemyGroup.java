@@ -47,12 +47,19 @@ public class TreeEnemyGroup extends TreeContent
 		this.keyNode = -1;
 	}
 	
-	public TreeEnemyGroup(EnemyData enemyData, GroupType groupType,int childIndex, int keyNode){
-		//childGroupで使われるコンストラクタ
+	public TreeEnemyGroup(EnemyData enemyData, GroupType groupType,int childIndex){
+		//childGroupで使われるコンストラクタ(NodeAnime以外)
 		
 		this(enemyData, groupType);
 		
 		this.childIndex = childIndex;
+	}
+	
+	public TreeEnemyGroup(EnemyData enemyData, GroupType groupType,int childIndex, int keyNode){
+		//NodeAnimeで使われるコンストラクタ
+		
+		this(enemyData, groupType, childIndex);
+	
 		this.keyNode = keyNode;
 	}
 	

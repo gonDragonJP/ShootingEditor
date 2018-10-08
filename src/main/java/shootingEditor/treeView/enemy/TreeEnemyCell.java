@@ -21,9 +21,11 @@ import shootingEditor.animation.AnimationData.RotateAttribute;
 import shootingEditor.enemy.CollisionRegion;
 import shootingEditor.enemy.EnemyData;
 import shootingEditor.enemy.EnemyData.MutableCategory;
+import shootingEditor.treeView.ReflectUtil;
 import shootingEditor.treeView.TreeContent;
 import shootingEditor.treeView.TreeContent.ContentCategory;
 import shootingEditor.treeView.enemy.TreeEnemyEntry.ValueType;
+import shootingEditor.treeView.enemy.content.EntryContent;
 
 public class TreeEnemyCell extends TreeCell<TreeContent>{
 	
@@ -66,8 +68,9 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 		
 		if(getItem().category == TreeContent.ContentCategory.ENTRY) {
 			
-			TreeEnemyEntry data = (TreeEnemyEntry)getItem();
+			EntryContent data = (EntryContent)getItem();
 			
+			/*
 			switch(data.entry.valueType){
 			
 			case BOOLEAN:
@@ -86,7 +89,14 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 				if (textField == null) createTextField();
 				textField.setText(data.textValue);
 				editControl = textField;
-			}
+			}*/
+			
+			System.out.println(ReflectUtil.getSuperType
+					(data.referObject, data.fieldName));
+			
+			if (textField == null) createTextField();
+			textField.setText(data.valueText);
+			editControl = textField;
 			
 			setText(null);
 			setGraphic(editControl);
@@ -165,20 +175,20 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 	
 	private void addNode(){
 		
-		((MyTreeItem)getTreeItem()).addNode();
+		((EnemyTreeItem)getTreeItem()).addNode();
 	}
 	
 	private void deleteNode(){
 		
-		((MyTreeItem)getTreeItem()).deleteNode();
+		((EnemyTreeItem)getTreeItem()).deleteNode();
 	}
 	
 	private void createChoiceBox(){
 		
-		TreeEnemyEntry item = (TreeEnemyEntry) getItem();
+		EntryContent item = (EntryContent) getItem();
 		
 		choiceBox = new ChoiceBox<>();
-		setChoiceBoxItems(item.entry.valueType);
+		//setChoiceBoxItems(item.fieldName);
 		choiceBox.getSelectionModel().selectedItemProperty().addListener
 		(new ChangeListener<String>(){
 
@@ -191,7 +201,7 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 		});
 	}
 	
-	private void setChoiceBoxItems(ValueType type){
+	/*private void setChoiceBoxItems(String fieldName){
 		
 		ArrayList<String> itemList = new ArrayList<>();
 		
@@ -229,13 +239,13 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 		}
 		
 		choiceBox.getItems().addAll(itemList);
-	}
+	}*/
 	
 	private void createTextField(){
 		
-		TreeEnemyEntry item = (TreeEnemyEntry) getItem();
+		EntryContent item = (EntryContent) getItem();
 		
-		textField = new TextField(item.textValue);
+		textField = new TextField(item.valueText);
 		textField.setOnKeyReleased(new EventHandler<KeyEvent>(){
 
 			@Override

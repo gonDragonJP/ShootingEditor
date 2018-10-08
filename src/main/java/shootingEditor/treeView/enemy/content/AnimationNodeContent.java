@@ -1,10 +1,6 @@
 package shootingEditor.treeView.enemy.content;
 
 import shootingEditor.animation.AnimationData;
-import shootingEditor.enemy.EnemyData;
-import shootingEditor.treeView.enemy.TreeEnemyEntry.EntryCategory;
-import shootingEditor.treeView.enemy.TreeEnemyEntry.ValueType;
-import shootingEditor.treeView.enemy.content.MovingNodeContent.Fields;
 
 public class AnimationNodeContent extends EntryContent{
 

@@ -1,6 +1,5 @@
 package shootingEditor.treeView.enemy.content;
 
-import shootingEditor.enemy.EnemyData;
 import shootingEditor.enemy.MovingNode;
 
 public class MovingNodeContent extends EntryContent{

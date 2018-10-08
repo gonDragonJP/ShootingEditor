@@ -1,7 +1,6 @@
 package shootingEditor.treeView.enemy.content;
 
 import shootingEditor.enemy.CollisionRegion;
-import shootingEditor.enemy.EnemyData;
 
 public class CollisionNodeContent extends EntryContent{
 

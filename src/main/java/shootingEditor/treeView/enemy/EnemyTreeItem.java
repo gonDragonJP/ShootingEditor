@@ -6,9 +6,9 @@ import shootingEditor.enemy.EnemyData.MutableCategory;
 import shootingEditor.treeView.TreeContent;
 import shootingEditor.treeView.enemy.TreeEnemyGroup.GroupType;
 
-public class MyTreeItem extends TreeItem<TreeContent>{
+public class EnemyTreeItem extends TreeItem<TreeContent>{
 	
-	public MyTreeItem(TreeContent treeContent){
+	public EnemyTreeItem(TreeContent treeContent){
 		super(treeContent);
 		
 	}
@@ -59,7 +59,7 @@ public class MyTreeItem extends TreeItem<TreeContent>{
 		enemyData.generateNewNodeActionAnime(keyNode);
 		
 		int childCount = this.getChildren().size();
-		EnemyTreeUtil.addAChildOfNodeAnime(this, childCount, keyNode);
+		EnemyTreeUtil.addChildOfNodeAnime(this, childCount, keyNode);
 		
 		setExpanded(true);
 	}

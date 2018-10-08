@@ -32,7 +32,21 @@ public class BasicDataContent extends EntryContent{
 	public static EntryContent create
 	(Fields field, EnemyData enemyData){
 		
-		return EntryContent.create
-				(field.toString(), field.fieldName, field.subFieldName, enemyData);
+		BasicDataContent content = new BasicDataContent(field.toString(), ContentCategory.ENTRY);
+		content.referObject = enemyData;
+		content.fieldName = field.fieldName;
+		content.subFieldName = field.subFieldName;
+		content.setValueTextByEnemyData(); 
+			//BasicDataContentのメソッドを呼ぶ為に親クラスのcreateを使っていません
+		
+		return content;
+	}
+	
+	public void setValueTextByEnemyData(){
+		super.setValueTextByEnemyData();
+		
+		if(fieldName == "startPosAttrib") 
+			valueText = EnemyData.StartPositionAtrib
+			.getFromID(Integer.valueOf(valueText)).toString();
 	}
 }

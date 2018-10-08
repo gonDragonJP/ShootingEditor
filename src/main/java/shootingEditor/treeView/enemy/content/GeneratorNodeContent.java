@@ -1,6 +1,5 @@
 package shootingEditor.treeView.enemy.content;
 
-import shootingEditor.enemy.EnemyData;
 import shootingEditor.enemy.GeneratingChild;
 
 public class GeneratorNodeContent extends EntryContent{
