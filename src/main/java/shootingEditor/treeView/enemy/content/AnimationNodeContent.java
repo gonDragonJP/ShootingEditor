@@ -1,5 +1,6 @@
 package shootingEditor.treeView.enemy.content;
 
+import shootingEditor.animation.AnimationData;
 import shootingEditor.enemy.EnemyData;
 import shootingEditor.treeView.enemy.TreeEnemyEntry.EntryCategory;
 import shootingEditor.treeView.enemy.TreeEnemyEntry.ValueType;
@@ -15,7 +16,6 @@ public class AnimationNodeContent extends EntryContent{
 		ANI_TEXTURE_ID("textureID",null),
 		ANI_DRAWSIZE_X("drawSize","x"),
 		ANI_DRAWSIZE_Y("drawSize","y"),
-		ANI_TEXTURESHEET("textureSheet",null),
 		ANI_REPEAT_ATTRIB("repeatAttribute",null),
 		ANI_FRAME_OFFSET("frameOffset",null),
 		ANI_FRAME_NUMBER("frameNumber",null),
@@ -33,9 +33,9 @@ public class AnimationNodeContent extends EntryContent{
 	}
 	
 	public static EntryContent create
-	(String name, Fields field, EnemyData enemyData){
+	(Fields field, AnimationData node){
 		
 		return EntryContent.create
-				(field.toString(), field.fieldName, field.subFieldName, enemyData);
+				(field.toString(), field.fieldName, field.subFieldName, node);
 	}
 }

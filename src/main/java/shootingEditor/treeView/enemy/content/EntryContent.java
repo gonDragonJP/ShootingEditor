@@ -44,7 +44,7 @@ import shootingEditor.treeView.TreeContent.ContentCategory;
 	@Override
 	public String toString(){
 		
-		return this.name + " ="+ valueText;
+		return this.name + " = "+ valueText;
 	}
 	
 	public void setValueTextByEnemyData(){
@@ -53,7 +53,7 @@ import shootingEditor.treeView.TreeContent.ContentCategory;
 		
 		switch(fieldType) {
 			
-		case "java.lang.String": case "int": case "boolean":
+		case "java.lang.String": case "int": case "double": case "boolean":
 			
 			valueText = 
 				ReflectUtil.getReflectedSimpleValue(referObject, fieldName);
@@ -62,9 +62,13 @@ import shootingEditor.treeView.TreeContent.ContentCategory;
 		case "shootingEditor.vector.Int2Vector":
 		case "shootingEditor.vector.Double2Vector":
 			
-			valueText = 
-				ReflectUtil.getReflectedVectorValue
+			valueText = ReflectUtil.getReflectedVectorValue
 				(referObject, fieldName, subFieldName);
+			break;
+			
+		default:	//enumå^Ç‡êîílå^Ç»Ç«Ç∆ìØÇ∂ÇÊÇ§Ç…ñºèÃÇ™éÊÇËèoÇπÇ‹Ç∑
+			valueText = 
+				ReflectUtil.getReflectedSimpleValue(referObject, fieldName);
 		}
 		
 		if(fieldName == "startPosAttrib") 
@@ -78,7 +82,7 @@ import shootingEditor.treeView.TreeContent.ContentCategory;
 		
 		switch(fieldType) {
 		
-		case "java.lang.String": case "int": case "boolean":
+		case "java.lang.String": case "int": case "double": case "boolean":
 			
 			return ReflectUtil.setReflectedSimpleEnemyData
 					(referObject, text, fieldName);

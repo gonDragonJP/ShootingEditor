@@ -5,16 +5,19 @@ import java.util.Set;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import shootingEditor.MainApp;
+import shootingEditor.animation.AnimationData;
 import shootingEditor.animation.AnimationSet;
 import shootingEditor.animation.AnimationSet.AnimeKind;
 import shootingEditor.enemy.EnemyData;
 import shootingEditor.treeView.TreeContent;
 import shootingEditor.treeView.TreeContent.ContentCategory;
 import shootingEditor.treeView.enemy.TreeEnemyGroup.GroupType;
+import shootingEditor.treeView.enemy.content.AnimationNodeContent;
 import shootingEditor.treeView.enemy.content.BasicDataContent;
 import shootingEditor.treeView.enemy.content.CollisionNodeContent;
 import shootingEditor.treeView.enemy.content.GeneratorNodeContent;
 import shootingEditor.treeView.enemy.content.MovingNodeContent;
+import shootingEditor.treeView.enemy.content.NodeAnimeKeyContent;
 import shootingEditor.treeView.enemy.TreeEnemyEntry.EntryCategory;
 import shootingEditor.treeView.enemy.TreeEnemyEntry.Entry;
 
@@ -119,12 +122,12 @@ public class EnemyTreeUtil {
 		treeData = new TreeEnemyGroup(enemyData, GroupType.NORMAL_ANIME);
 		treeItem = new TreeItem<TreeContent>(treeData);
 		root.getChildren().add(treeItem);
-		addAnimationItem(treeItem, AnimeKind.NORMAL);
+		addAnimationItem(treeItem, animeSet.normalAnime);
 		
 		treeData = new TreeEnemyGroup(enemyData, GroupType.EXPLOSION_ANIME);
 		treeItem = new TreeItem<TreeContent>(treeData);
 		root.getChildren().add(treeItem);
-		addAnimationItem(treeItem, AnimeKind.EXPLOSION);
+		addAnimationItem(treeItem, animeSet.explosionAnime);
 		
 		treeData = new TreeEnemyGroup(enemyData, GroupType.NODE_ANIME);
 		treeItem = new MyTreeItem(treeData);
@@ -225,20 +228,13 @@ public class EnemyTreeUtil {
 		}
 	}
 	
-	private static void addAnimationItem(TreeItem<TreeContent> root, AnimeKind animeKind){
+	private static void addAnimationItem(TreeItem<TreeContent> root, AnimationData data){
 		// normalAnime, explosionAnime といった単一ノードのデータをグループに追加します
 		
-		TreeEnemyEntry item;
-		TreeItem<TreeContent> treeItem;
-	
-		for(Entry e : Entry.values()){
-	
-			if(e.category == EntryCategory.ANIME_DATA){
+		for(AnimationNodeContent.Fields e : AnimationNodeContent.Fields.values()) {
 			
-				item = new TreeEnemyEntry(enemyData, e, animeKind);
-				treeItem = new TreeItem<TreeContent>(item);
-				root.getChildren().add(treeItem);
-			}
+			root.getChildren().add(new TreeItem(
+					AnimationNodeContent.create(e, data)));
 		}
 	}
 	
@@ -260,31 +256,28 @@ public class EnemyTreeUtil {
 		TreeEnemyGroup childGroup;
 		TreeItem<TreeContent> treeItem;
 		
-		childGroup = new TreeEnemyGroup(enemyData, TreeEnemyGroup.GroupType.NODEANIME_CHILD, childIndex, keyNode);
+		childGroup = new TreeEnemyGroup
+				(enemyData, TreeEnemyGroup.GroupType.NODEANIME_CHILD, childIndex, keyNode);
 		treeItem = new MyTreeItem(childGroup);
 		root.getChildren().add(treeItem);
 		
-		addItemOfNodeAnime(treeItem);
+		addItemOfNodeAnime(treeItem, keyNode);
 	}
 	
-	private static void addItemOfNodeAnime(TreeItem<TreeContent> root){
+	
+	private static void addItemOfNodeAnime
+	(TreeItem<TreeContent> root, int keyNode){
 		// nodeIndex番目の　nodeActionAnime のデータを　keyNode編集用のitemと共に追加します
 
-		TreeEnemyEntry item;
-		TreeItem<TreeContent> treeItem;
-	
-		item = new TreeEnemyEntry((TreeEnemyGroup)root.getValue(), enemyData, Entry.ANI_NODEANIME_KEY);
-		treeItem  = new TreeItem<TreeContent>(item);
-		root.getChildren().add(treeItem);
+		root.getChildren().add(new TreeItem<>(
+				NodeAnimeKeyContent.create(keyNode)));
 		
-		for(Entry e : Entry.values()){
+		AnimationData nodeAnime = enemyData.animationSet.nodeActionAnime.get(keyNode);
+		
+		for(AnimationNodeContent.Fields e : AnimationNodeContent.Fields.values()) {
 			
-			if(e.category == EntryCategory.ANIME_DATA){
-				
-				item = new TreeEnemyEntry((TreeEnemyGroup)root.getValue(), enemyData, e);
-				treeItem  = new TreeItem<TreeContent>(item);
-				root.getChildren().add(treeItem);
-			}
+			root.getChildren().add(new TreeItem<>(
+					AnimationNodeContent.create(e, nodeAnime)));
 		}
 	}
 }

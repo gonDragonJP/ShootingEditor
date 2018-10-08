@@ -17,7 +17,6 @@ public class ReflectUtil {
 		return fielz.getType().getName();
 	}
 
-	
 	public static String getReflectedSimpleValue
 	(Object object, String fieldName){
 		
