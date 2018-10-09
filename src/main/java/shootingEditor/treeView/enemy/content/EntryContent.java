@@ -1,6 +1,11 @@
 package shootingEditor.treeView.enemy.content;
 
+import shootingEditor.animation.AnimationData;
+import shootingEditor.animation.AnimationData.RepeatAttribute;
+import shootingEditor.animation.AnimationData.RotateAttribute;
+import shootingEditor.enemy.CollisionRegion;
 import shootingEditor.enemy.EnemyData;
+import shootingEditor.enemy.CollisionRegion.CollisionShape;
 import shootingEditor.treeView.ReflectUtil;
 import shootingEditor.treeView.TreeContent;
 
@@ -10,6 +15,7 @@ import shootingEditor.treeView.TreeContent;
 	
 	public String fieldName, subFieldName;
 	public String valueText;
+	public int attribID; //扱うのが選択式のフィールドであれば利用されます
 	
 	public EntryContent(String name, ContentCategory category) {
 		super(name, category);	
@@ -34,9 +40,8 @@ import shootingEditor.treeView.TreeContent;
 	
 	public void setChoicedValue(int index, String text){
 		
-		if(setEnemyDataByAText(String.valueOf(index))) {
+		if(setEnemyDataByMultipleChoice(index, text)) {
 			this.valueText = text;
-			//this.attribID = index;
 		}
 	};
 	
@@ -71,7 +76,7 @@ import shootingEditor.treeView.TreeContent;
 		}
 	}
 	
-	public boolean setEnemyDataByAText(String text) {
+	private boolean setEnemyDataByAText(String text) {
 		
 		String fieldType = ReflectUtil.getFieldType(referObject, fieldName);
 		
@@ -87,6 +92,37 @@ import shootingEditor.treeView.TreeContent;
 			
 			return ReflectUtil.setReflectedVectorEnemyData
 					(referObject, text, fieldName, subFieldName);
+		}
+		
+		return false;
+	}
+	
+	private boolean setEnemyDataByMultipleChoice(int index, String text){
+		
+		switch (fieldName){
+		
+		case "startPosAttrib":
+		case "startVelAttrib":
+		case "startAccAttrib":
+			return ReflectUtil.setReflectedVectorEnemyData
+					(referObject, String.valueOf(index), fieldName, subFieldName);	
+			
+		case "repeatAttribute":
+			((AnimationData)referObject).repeatAttribute
+				= RepeatAttribute.getFromID(index);
+			return true;
+		
+		case "rotateAction":
+			((AnimationData)referObject).rotateAction
+				= RotateAttribute.getFromID(index);
+			return true;
+			
+		case "collisionShape":
+			((CollisionRegion)referObject).collisionShape 
+				= CollisionShape.getFromID(index);
+			return true;
+		
+		default:
 		}
 		
 		return false;

@@ -1,10 +1,12 @@
-package shootingEditor.treeView;
+package shootingEditor.treeView.trash;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import shootingEditor.treeView.TreeContent;
+import shootingEditor.treeView.TreeContent.ContentCategory;
 
 public class TreeCellImpl extends TreeCell<TreeContent>{
 	

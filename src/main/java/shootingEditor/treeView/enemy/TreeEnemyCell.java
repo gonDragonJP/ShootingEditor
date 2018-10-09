@@ -24,8 +24,9 @@ import shootingEditor.enemy.EnemyData.MutableCategory;
 import shootingEditor.treeView.ReflectUtil;
 import shootingEditor.treeView.TreeContent;
 import shootingEditor.treeView.TreeContent.ContentCategory;
-import shootingEditor.treeView.enemy.TreeEnemyEntry.ValueType;
 import shootingEditor.treeView.enemy.content.EntryContent;
+import shootingEditor.treeView.enemy.content.MultipleChoiceFields;
+import shootingEditor.treeView.trash.TreeEnemyEntry.ValueType;
 
 public class TreeEnemyCell extends TreeCell<TreeContent>{
 	
@@ -70,33 +71,17 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 			
 			EntryContent data = (EntryContent)getItem();
 			
-			/*
-			switch(data.entry.valueType){
+			if(MultipleChoiceFields.isMultipleChoiceField(data.fieldName)){
 			
-			case BOOLEAN:
-			case STARTPOSITION_ATTRIB:
-			case STARTVELOCITY_ATTRIB:
-			case STARTACCELERATION_ATTRIB:
-			case ANI_REPEAT_ATTRIB:
-			case ANI_ROTATE_ATTRIB:
-			case COLLISION_SHAPE:
 				if (choiceBox == null) createChoiceBox();
-				choiceBox.getSelectionModel().select(data.attribID);
+				//choiceBox.getSelectionModel().select(0);
 				editControl = choiceBox;
-				break;
+			}else{
 		
-			default:
 				if (textField == null) createTextField();
-				textField.setText(data.textValue);
+				textField.setText(data.valueText);
 				editControl = textField;
-			}*/
-			
-			System.out.println(ReflectUtil.getSuperType
-					(data.referObject, data.fieldName));
-			
-			if (textField == null) createTextField();
-			textField.setText(data.valueText);
-			editControl = textField;
+			}
 			
 			setText(null);
 			setGraphic(editControl);
@@ -188,7 +173,10 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 		EntryContent item = (EntryContent) getItem();
 		
 		choiceBox = new ChoiceBox<>();
-		//setChoiceBoxItems(item.fieldName);
+		
+		choiceBox.getItems().addAll(
+				MultipleChoiceFields.getMultipleChoiceList(item.fieldName));
+		
 		choiceBox.getSelectionModel().selectedItemProperty().addListener
 		(new ChangeListener<String>(){
 
@@ -200,46 +188,6 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 			}	
 		});
 	}
-	
-	/*private void setChoiceBoxItems(String fieldName){
-		
-		ArrayList<String> itemList = new ArrayList<>();
-		
-		switch(type){
-		
-		case BOOLEAN:
-			itemList.add("true"); itemList.add("false");
-			break;
-		case STARTPOSITION_ATTRIB:
-			for(EnemyData.StartPositionAtrib e: EnemyData.StartPositionAtrib.values()){
-				itemList.add(e.name());
-			}
-			break;
-		case STARTVELOCITY_ATTRIB:
-		case STARTACCELERATION_ATTRIB:
-			for(EnemyData.StartVectorAtrib e: EnemyData.StartVectorAtrib.values()){
-				itemList.add(e.name());
-			}
-			break;
-		case ANI_REPEAT_ATTRIB:
-			for(RepeatAttribute e: RepeatAttribute.values()){
-				itemList.add(e.name());
-			}
-			break;
-		case ANI_ROTATE_ATTRIB:
-			for(RotateAttribute e: RotateAttribute.values()){
-				itemList.add(e.name());
-			}
-			break;
-		case COLLISION_SHAPE:
-			for(CollisionRegion.CollisionShape e: CollisionRegion.CollisionShape.values()){
-				itemList.add(e.name());
-			}
-			break;
-		}
-		
-		choiceBox.getItems().addAll(itemList);
-	}*/
 	
 	private void createTextField(){
 		

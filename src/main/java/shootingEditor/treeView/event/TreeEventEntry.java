@@ -14,7 +14,7 @@ import shootingEditor.animation.AnimationSet.AnimeKind;
 import shootingEditor.enemy.CollisionRegion;
 import shootingEditor.enemy.CollisionRegion.CollisionShape;
 import shootingEditor.treeView.TreeContent;
-import shootingEditor.treeView.enemy.TreeEnemyEntry.Entry;
+import shootingEditor.treeView.trash.TreeEnemyEntry.Entry;
 
 public class TreeEventEntry extends TreeContent{
 	

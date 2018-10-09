@@ -18,8 +18,8 @@ import shootingEditor.treeView.enemy.content.CollisionNodeContent;
 import shootingEditor.treeView.enemy.content.GeneratorNodeContent;
 import shootingEditor.treeView.enemy.content.MovingNodeContent;
 import shootingEditor.treeView.enemy.content.NodeAnimeKeyContent;
-import shootingEditor.treeView.enemy.TreeEnemyEntry.EntryCategory;
-import shootingEditor.treeView.enemy.TreeEnemyEntry.Entry;
+import shootingEditor.treeView.trash.TreeEnemyEntry.Entry;
+import shootingEditor.treeView.trash.TreeEnemyEntry.EntryCategory;
 
 public class EnemyTreeUtil {
 	

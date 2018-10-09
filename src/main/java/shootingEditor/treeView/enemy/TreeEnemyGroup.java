@@ -2,10 +2,9 @@ package shootingEditor.treeView.enemy;
 
 import shootingEditor.enemy.EnemyData;
 import shootingEditor.treeView.TreeContent;
-import shootingEditor.treeView.TreeContent.ContentCategory;
 
 public class TreeEnemyGroup extends TreeContent 
-							implements TreeEnemyEntry.IndexCallback{
+							implements IndexCallBack{
 
 	public enum GroupType{
 		
