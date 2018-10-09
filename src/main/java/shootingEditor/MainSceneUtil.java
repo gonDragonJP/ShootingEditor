@@ -113,7 +113,7 @@ public class MainSceneUtil {
 	
 	private static void addTreeView(Pane pane){
 		
-		treeView.setPrefWidth(350);
+		treeView.setPrefWidth(400);
 		treeView.setPrefHeight(500);
 		treeView.setEditable(true);
 		

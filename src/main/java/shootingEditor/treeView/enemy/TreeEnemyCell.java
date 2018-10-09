@@ -72,9 +72,8 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 			EntryContent data = (EntryContent)getItem();
 			
 			if(MultipleChoiceFields.isMultipleChoiceField(data.fieldName)){
-			
-				if (choiceBox == null) createChoiceBox();
-				//choiceBox.getSelectionModel().select(0);
+			 
+				createChoiceBox();
 				editControl = choiceBox;
 			}else{
 		
@@ -85,6 +84,7 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 			
 			setText(null);
 			setGraphic(editControl);
+			editControl.requestFocus();
 		}
 	}
 	
@@ -185,6 +185,7 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 				
 				int index = choiceBox.getSelectionModel().getSelectedIndex();
 				item.setChoicedValue(index, newValue);
+				commitEdit(item);
 			}	
 		});
 	}
