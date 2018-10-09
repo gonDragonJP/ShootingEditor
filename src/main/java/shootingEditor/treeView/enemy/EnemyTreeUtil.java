@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.util.Callback;
 import shootingEditor.MainApp;
 import shootingEditor.animation.AnimationData;
 import shootingEditor.animation.AnimationSet;
@@ -227,16 +228,20 @@ public class EnemyTreeUtil {
 		treeItem = new EnemyTreeItem(childGroup);
 		root.getChildren().add(treeItem);
 		
-		addItemOfNodeAnime(treeItem, keyNode);
+		addItemOfNodeAnime(treeItem, keyNode, (newKey) ->{
+				childGroup.setKeyNode(newKey);
+				return null;
+				});
 	}
 	
 	
 	private static void addItemOfNodeAnime
-	(TreeItem<TreeContent> root, int keyNode){
+		(TreeItem<TreeContent> root, int keyNode, Callback<Integer, Boolean> setKeyToGroup){
 		// nodeIndex番目の　nodeActionAnime のデータを　keyNode編集用のitemと共に追加します
 
 		root.getChildren().add(new TreeItem<>(
-				NodeAnimeKeyContent.create(keyNode)));
+				NodeAnimeKeyContent.create
+				(keyNode, enemyData.animationSet.nodeActionAnime, setKeyToGroup)));
 		
 		AnimationData nodeAnime = enemyData.animationSet.nodeActionAnime.get(keyNode);
 		

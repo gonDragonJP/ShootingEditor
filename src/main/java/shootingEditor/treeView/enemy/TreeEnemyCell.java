@@ -26,6 +26,7 @@ import shootingEditor.treeView.TreeContent;
 import shootingEditor.treeView.TreeContent.ContentCategory;
 import shootingEditor.treeView.enemy.content.EntryContent;
 import shootingEditor.treeView.enemy.content.MultipleChoiceFields;
+import shootingEditor.treeView.enemy.content.NodeAnimeKeyContent;
 import shootingEditor.treeView.trash.TreeEnemyEntry.ValueType;
 
 public class TreeEnemyCell extends TreeCell<TreeContent>{
@@ -204,7 +205,14 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 				
 				if(code == KeyCode.ENTER){
 					
-					item.setValueByText(textField.getText());
+					if(getItem().getClass().equals(NodeAnimeKeyContent.class)) {
+						
+						((NodeAnimeKeyContent)item).setValueByText(textField.getText());
+						//nodeAnime‚Ìkey“ü—Í‚Ì‚¾‚¯‚Í”h¶Œ^‚Å‚Ìƒƒ\ƒbƒh‚Å‘Î‰‚µ‚Ü‚·
+					}else {
+					
+						item.setValueByText(textField.getText());
+					}
 					commitEdit(item);
 					
 				}else if (code == KeyCode.ESCAPE){

@@ -3,8 +3,7 @@ package shootingEditor.treeView.enemy;
 import shootingEditor.enemy.EnemyData;
 import shootingEditor.treeView.TreeContent;
 
-public class TreeEnemyGroup extends TreeContent 
-							implements IndexCallBack{
+public class TreeEnemyGroup extends TreeContent{
 
 	public enum GroupType{
 		
@@ -62,6 +61,12 @@ public class TreeEnemyGroup extends TreeContent
 		this.keyNode = keyNode;
 	}
 	
+	public void setKeyNode(int keyNode) {
+		//NodeAnimeÇÃkeyïœçXéûÇ…åƒÇ—èoÇ≥ÇÍÇ‹Ç∑
+		
+		this.keyNode = keyNode;
+	}
+	
 	@Override
 	public String toString(){
 		
@@ -72,23 +77,5 @@ public class TreeEnemyGroup extends TreeContent
 				"[key:"+ String.valueOf(keyNode) + "]" : "";
 		
 		return this.name + index + key;
-	}
-
-	@Override
-	public int getChildIndex() {
-		
-		return childIndex;
-	}
-
-	@Override
-	public int getKeyNode() {
-		
-		return keyNode;
-	}
-
-	@Override
-	public void setKeyNode(int keyNode) {
-		
-		this.keyNode = keyNode;
 	}
 }
