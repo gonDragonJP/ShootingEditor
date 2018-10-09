@@ -215,6 +215,7 @@ public class MainSceneUtil {
 	private static void addScrollTextField(Pane pane){
 		
 		scrollTextField.setEditable(false);
+		scrollTextField.setPrefWidth(100);
 		
 		pane.getChildren().add(scrollTextField);
 	}

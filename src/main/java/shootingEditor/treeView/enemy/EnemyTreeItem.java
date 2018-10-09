@@ -21,8 +21,6 @@ public class EnemyTreeItem extends TreeItem<TreeContent>{
 		MutableCategory mutableCategory = null;
 		GroupType childGroupType = null;
 		
-		System.out.print(group.groupType.toString());
-		
 		switch(group.groupType){
 		
 		case MOVING:

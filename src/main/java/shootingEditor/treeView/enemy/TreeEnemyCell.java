@@ -78,7 +78,7 @@ public class TreeEnemyCell extends TreeCell<TreeContent>{
 				editControl = choiceBox;
 			}else{
 		
-				if (textField == null) createTextField();
+				createTextField();
 				textField.setText(data.valueText);
 				editControl = textField;
 			}
