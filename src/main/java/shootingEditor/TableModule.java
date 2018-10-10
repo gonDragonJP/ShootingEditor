@@ -156,7 +156,7 @@ public class TableModule {
 		MenuItem[] menuItem  = new MenuItem[3];
 		for(int i=0; i<menuItem.length; i++) menuItem[i] = new MenuItem();
 		
-		String[] menuText = {"add", "delete", "add copy"};
+		String[] menuText = {"add", "delete", "duplicate"};
 		
 		for(int i=0; i<menuItem.length; i++) menuItem[i].setText(menuText[i]);
 		menuItem[0].setOnAction(e ->{addNewEnemyData();});
