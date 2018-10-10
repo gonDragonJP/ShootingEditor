@@ -33,8 +33,6 @@ public class MainApp extends Application{
 		
 		Application.launch(args);
 	}
-	
-	//static GeneratingTest test = new GeneratingTest();
 
 	@Override
 	public void start(Stage stage) throws Exception {

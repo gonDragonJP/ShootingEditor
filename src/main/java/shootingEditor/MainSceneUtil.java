@@ -38,7 +38,7 @@ public class MainSceneUtil {
 	public static final int CanvasX = 320;
 	public static final int CanvasY = 500;
 	
-	public static final int stageNumber = 2;
+	public static final int stageNumber = 3;
 	
 	public static Canvas canvas = new Canvas(CanvasX, CanvasY);
 	public static CheckBox checkEnableTex = new CheckBox("Enable Texture");
