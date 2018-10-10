@@ -1,6 +1,8 @@
 package shootingEditor.treeView.enemy.content;
 
+import shootingEditor.enemy.EnemyData;
 import shootingEditor.enemy.MovingNode;
+import shootingEditor.treeView.TreeContent.ContentCategory;
 
 public class MovingNodeContent extends EntryContent{
 	
@@ -33,7 +35,21 @@ public class MovingNodeContent extends EntryContent{
 	public static EntryContent create
 	(Fields field, MovingNode node){
 		
-		return EntryContent.create
-				(field.toString(), field.fieldName, field.subFieldName, node);
+		MovingNodeContent content = new MovingNodeContent(field.toString(), ContentCategory.ENTRY);
+		content.referObject = node;
+		content.fieldName = field.fieldName;
+		content.subFieldName = field.subFieldName;
+		content.setValueTextByEnemyData(); 
+			//MovingNodeContentのメソッドを呼ぶ為に親クラスのcreateを使っていません
+		
+		return content;
+	}
+	
+	public void setValueTextByEnemyData(){
+		super.setValueTextByEnemyData();
+		
+		if((fieldName == "startVelAttrib") || (fieldName == "startAccAttrib")) 
+			valueText = EnemyData.StartVectorAtrib
+			.getFromID(Integer.valueOf(valueText)).toString();
 	}
 }

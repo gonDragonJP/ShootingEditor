@@ -27,10 +27,11 @@ public class TableModule {
 	
 	private MainApp mainApp;
 	
+	private EnemyData clipEnemyData = null;
+	
 	public TableModule(MainApp mainApp){
 		
 		this.mainApp = mainApp;
-
 	}
 	
 	public int getTabIndex(){
@@ -153,17 +154,21 @@ public class TableModule {
 	private void openEnemyContextMenu(){
 		
 		ContextMenu contextMenu = new ContextMenu();
-		MenuItem[] menuItem  = new MenuItem[3];
+		MenuItem[] menuItem  = new MenuItem[4];
 		for(int i=0; i<menuItem.length; i++) menuItem[i] = new MenuItem();
 		
-		String[] menuText = {"add", "delete", "duplicate"};
+		String[] menuText = {"Add New", "Delete", "Copy", "Add Copy"};
 		
 		for(int i=0; i<menuItem.length; i++) menuItem[i].setText(menuText[i]);
-		menuItem[0].setOnAction(e ->{addNewEnemyData();});
-		menuItem[1].setOnAction(e ->{deleteEnemyData();});
-		menuItem[2].setOnAction(e ->{addCopyEnemyData();});
-	
-		contextMenu.getItems().addAll(menuItem);
+		menuItem[0].setOnAction(e ->addNewEnemyData());
+		menuItem[1].setOnAction(e ->deleteEnemyData());
+		menuItem[2].setOnAction(e->copyToClipEnemyData());
+		menuItem[3].setOnAction(e ->addCopyEnemyData());
+		
+		for(int i=0; i<menuItem.length; i++)
+			if(menuText[i] != "Add Copy" || clipEnemyData != null)
+				contextMenu.getItems().add(menuItem[i]);
+		
 		MainSceneUtil.enemyTable.setContextMenu(contextMenu);
 	}
 	
@@ -188,11 +193,15 @@ public class TableModule {
 		MainSceneUtil.enemyTable.scrollTo(enemyIndex);
 	}
 	
+	private void copyToClipEnemyData(){
+		
+		clipEnemyData = MainSceneUtil.enemyTable.getSelectionModel().getSelectedItem();
+	}
+	
 	private void addCopyEnemyData(){
 		
-		EnemyData enemyData = MainSceneUtil.enemyTable.getSelectionModel().getSelectedItem();
-		int newID = AccessOfEnemyData.addCopyEnemyData(enemyData, StageData.stage);
-		
+		int newID = AccessOfEnemyData.addCopyEnemyData(clipEnemyData, StageData.stage);
+		clipEnemyData = null;
 		mainApp.gameTestModule.refreshEnemyList();
 		
 		setEnemyTableData(StageData.enemyList);
