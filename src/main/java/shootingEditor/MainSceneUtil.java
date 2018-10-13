@@ -36,7 +36,7 @@ import sun.rmi.runtime.Log;
 public class MainSceneUtil {
 	
 	public static final int CanvasX = 320;
-	public static final int CanvasY = 500;
+	public static final int CanvasY = 480;
 	
 	public static final int stageNumber = 3;
 	

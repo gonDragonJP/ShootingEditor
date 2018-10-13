@@ -5,6 +5,7 @@ import com.sun.istack.internal.logging.Logger;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import shootingEditor.Global;
 import shootingEditor.animation.AnimationData;
 import shootingEditor.enemy.Enemy;
 import shootingEditor.texture.TextureSheet;
@@ -18,6 +19,7 @@ public class Background {
     }
 
     private static Double2Vector drawSize = new Double2Vector();
+    private static Double2Vector drawLeftTop = new Double2Vector();
     private static TextureSheet drawSheet;
 
     private static int pictureNumber, pictureLength;
@@ -28,8 +30,15 @@ public class Background {
     public static void setGraphicsContext(Canvas canvas) {
     	
     	graphicsContext = canvas.getGraphicsContext2D();
-    	drawSize.set(canvas.getWidth(), canvas.getHeight());
-    	pictureLength = (int)canvas.getHeight();
+    	
+    	int width = Global.virtualScreenLimit.width();
+    	int height = Global.virtualScreenLimit.height();
+    	drawSize.set(width, height);
+    	pictureLength = height;
+    	
+    	int left = -(width - Global.virtualScreenSize.x)/2;
+    	int top = -(height - Global.virtualScreenSize.y)/2;
+    	drawLeftTop.set(left, top);
     }
 
     public static void initStage(){
@@ -60,7 +69,7 @@ public class Background {
 		
 		graphicsContext.drawImage(
 					img, texRect.left, texRect.top, drawSheet.gridSizeX, drawSheet.gridSizeY, 
-					0, position, drawSize.x, drawSize.y
+					drawLeftTop.x, drawLeftTop.y + position, drawSize.x, drawSize.y
 				);
 	}
 

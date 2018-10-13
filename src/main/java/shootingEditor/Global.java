@@ -15,7 +15,7 @@ public class Global {
 	public static Int2Vector screenCenter = new Int2Vector();
 
 	static final float virtualScreenWideRate = 1.25f;
-	static final Int2Vector virtualScreenSize = new Int2Vector(320, 480);
+	public static final Int2Vector virtualScreenSize = new Int2Vector(320, 480);
 	
 	static public float screenProjectionLeft;
 	
