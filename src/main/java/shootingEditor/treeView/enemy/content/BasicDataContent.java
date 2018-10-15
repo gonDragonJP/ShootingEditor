@@ -12,7 +12,7 @@ public class BasicDataContent extends EntryContent{
 		NAME("name",null), 
 		OBJECT_ID("objectID",null), 
 		IS_DERIVATIVE("isDerivativeType",null), 
-		TEXTURE_ID("textureID",null),
+		EXPLOSIVE_OBJECT_ID("explosiveObjectID",null),
 		HITPOINT("hitPoints",null), 
 		ATACKPOINT("atackPoints",null),
 		STARTPOSITION_X("startPosition","x"), 

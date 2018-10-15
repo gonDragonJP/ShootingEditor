@@ -109,7 +109,7 @@ public class AccessOfEnemyData {
 		try {
 			enemyData.name = resultSet.getString("name");
 			enemyData.isDerivativeType = resultSet.getBoolean("isDerivativeType");
-			enemyData.textureID = resultSet.getInt("textureID");
+			enemyData.explosiveObjectID = resultSet.getInt("explosiveObjectID");
 			enemyData.hitPoints = resultSet.getInt("hitPoint");
 			enemyData.atackPoints = resultSet.getInt("atackPoint");
 			enemyData.startPosition.x = resultSet.getInt("startPosition_X");
@@ -313,7 +313,7 @@ public class AccessOfEnemyData {
 		sql += String.valueOf(enemyData.objectID) +",";
 		sql += "'"+ enemyData.name +"',";
 		sql += (enemyData.isDerivativeType ? "1" : "0") +",";
-		sql += String.valueOf(enemyData.textureID) +",";
+		sql += String.valueOf(enemyData.explosiveObjectID) +",";
 		sql += String.valueOf(enemyData.hitPoints) +",";
 		sql += String.valueOf(enemyData.atackPoints) +",";
 		sql += String.valueOf(enemyData.startPosition.x) +",";
