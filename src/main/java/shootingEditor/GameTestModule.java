@@ -3,6 +3,7 @@ package shootingEditor;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -74,6 +75,7 @@ public class GameTestModule {
 		
 		MainSceneUtil.startButton.setDisable(true);
 		MainSceneUtil.resetButton.setDisable(true);
+		MainSceneUtil.testEnemyButton.setText("explode");
 		
 		stageManager.resetAllEnemies();
 		stageManager.addRootEnemy(enemyData);
@@ -125,6 +127,7 @@ public class GameTestModule {
 			stageManager.resetAllEnemies();
 			MainSceneUtil.startButton.setDisable(false);
 			MainSceneUtil.resetButton.setDisable(false);
+			Platform.runLater(() -> MainSceneUtil.testEnemyButton.setText("test Enemy"));
 		}
 	}
 	

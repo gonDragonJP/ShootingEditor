@@ -54,6 +54,10 @@ public class TreeModule {
 		mainApp.gameTestModule.testEnemy(tempEnemyDataForEdit);
 	}
 	
+	public void explodeEnemy(){
+		
+	}
+	
 	public void storeEnemyDataToDB(){
 		
 		int id = tempEnemyDataForEdit.objectID;

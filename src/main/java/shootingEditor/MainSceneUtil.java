@@ -135,17 +135,21 @@ public class MainSceneUtil {
 		testEnemyButton.setText("test Enemy");
 		storeTreeDataButton.setText("store To DB");
 	
-		testEnemyButton.setOnAction
-							(event -> mainApp.treeModule.testTreeEnemy());
-		storeTreeDataButton.setOnAction(event -> 
-			{
-				if(mainApp.tableModule.getTabIndex()==0){
+		testEnemyButton.setOnAction(event ->{
+			
+			if(testEnemyButton.getText() =="test Enemy")
+				mainApp.treeModule.testTreeEnemy();
+			if(testEnemyButton.getText() =="explode")
+				mainApp.treeModule.explodeEnemy();
+		});
+		storeTreeDataButton.setOnAction(event ->{
+			
+			if(mainApp.tableModule.getTabIndex()==0){
 					
-					mainApp.treeModule.storeEventDataToDB();
-				}
-				else mainApp.treeModule.storeEnemyDataToDB();
+				mainApp.treeModule.storeEventDataToDB();
 			}
-		);
+			else mainApp.treeModule.storeEnemyDataToDB();
+		});
 		
 		pane.getChildren().addAll(testEnemyButton, storeTreeDataButton);	
 	}
