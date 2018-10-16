@@ -152,15 +152,16 @@ public class Enemy extends ProtoEnemy{
 		return animeSet.normalAnime.drawSize;
 	}
 	
-	public void setExplosion(){
-		
-		isInExplosion = true;
-		animeKind = AnimationSet.AnimeKind.EXPLOSION;
-		totalAnimeFrame = 0;
-		
-		hasShadow = false;
-		//SoundEffect.play(SoundKind.EXPLOSION1);
-	}
+	@Override
+    protected void setExplosion(){
+
+        super.setExplosion();
+
+        animeKind = AnimationSet.AnimeKind.EXPLOSION;
+        totalAnimeFrame = 0;
+
+        //SoundEffect.play(SoundKind.EXPLOSION1);
+    }
 	
 	/*public void dropItem(boolean isShootByLaser){
 	

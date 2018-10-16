@@ -116,6 +116,11 @@ public class EnemiesManager {
 		generateEnemy(srcData, null, null);
 	}
 	
+	public void explodeTestEnemy(){ // Editor‚É‚¨‚¯‚é’P“Æ‘ÎÛ‚Ì”š”jw—ß‚Å‚·
+		
+		enemyList.get(0).setExplosion();
+	}
+	
 	private Enemy addChildEnemy(Enemy parent){
 		
 		GeneratingChild gen = parent.myData.generator.get(parent.genIndex);

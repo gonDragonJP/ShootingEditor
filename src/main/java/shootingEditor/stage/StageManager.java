@@ -101,6 +101,11 @@ public class StageManager {
 		enemiesManager.addRootEnemy(srcData);
 	}
 	
+	public void explodeTestEnemy(){// Editorにおけるテスト対象の爆発指令メソッドです
+		
+		enemiesManager.explodeTestEnemy();
+	}
+	
 	public int getEnemyCount(){
 		
 		return enemiesManager.getEnemyCount();

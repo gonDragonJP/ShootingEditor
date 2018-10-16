@@ -55,7 +55,8 @@ public class TreeModule {
 	}
 	
 	public void explodeEnemy(){
-		
+	
+		mainApp.gameTestModule.explodeTestEnemy();
 	}
 	
 	public void storeEnemyDataToDB(){

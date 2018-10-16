@@ -139,7 +139,7 @@ public class MainSceneUtil {
 			
 			if(testEnemyButton.getText() =="test Enemy")
 				mainApp.treeModule.testTreeEnemy();
-			if(testEnemyButton.getText() =="explode")
+			else if(testEnemyButton.getText() =="explode")
 				mainApp.treeModule.explodeEnemy();
 		});
 		storeTreeDataButton.setOnAction(event ->{

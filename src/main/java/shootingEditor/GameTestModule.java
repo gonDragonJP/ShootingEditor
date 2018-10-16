@@ -21,7 +21,7 @@ public class GameTestModule {
 	
 	private Timer timer;
 	private TimerTask timerTask;
-	private boolean isTestMode;
+	private boolean isTestMode, isInExplosion;
 	
 	private StageManager stageManager = new StageManager(
 			
@@ -85,7 +85,13 @@ public class GameTestModule {
 		makeTimerTask();
 		
 		isTestMode = true;
+		isInExplosion = false;
 		timer.schedule(timerTask, 0, Global.frameIntervalTime);
+	}
+	
+	public void explodeTestEnemy(){
+		
+		stageManager.explodeTestEnemy();
 	}
 	
 	public void refreshQueueOfEvent(){

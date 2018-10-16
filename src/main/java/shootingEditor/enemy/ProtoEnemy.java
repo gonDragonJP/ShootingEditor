@@ -33,6 +33,17 @@ public class ProtoEnemy {
 		isInExplosion = false;
 	}
 	
+	protected void setExplosion(){
+
+        isInExplosion = true;
+        hasShadow = false;
+    }
+
+    protected  void setOutOfScreen(){
+
+        isInScreen = false;
+    }
+	
 	private void setScreenLimit(){
 		
 		screenLimit.left  = Global.virtualScreenLimit.left;
