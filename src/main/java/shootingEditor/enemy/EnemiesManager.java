@@ -10,7 +10,7 @@ import shootingEditor.enemy.EnemyData.EnemyCategory;
 import shootingEditor.enemy.derivativeType.DerivativeEnemyFactory;
 import shootingEditor.vector.Int2Vector;
 
-public class EnemiesManager {
+public class EnemiesManager implements EnemyCommunicable{
 	
 	private DerivativeEnemyFactory derivativeEnemyFactory;
 	private CallbackOfMyPlane cbOfMyPlanePos;
@@ -43,6 +43,31 @@ public class EnemiesManager {
 	public int getEnemyCount(){
 		
 		return enemyList.size();
+	}
+	
+	@Override
+	public Enemy getGeneratingChild(Enemy parent) {
+		
+		return addChildEnemy(parent);
+	}
+
+	@Override
+	public void generateExplosiveObject(Enemy parent) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Int2Vector getMyPlanePos() {
+		
+		return cbOfMyPlanePos.getMyPlanePos();
+	}
+	
+
+	@Override
+	public void setMyPlanePos(Int2Vector myPlanePos) {
+		
+		cbOfMyPlanePos.setMyPlanePos(myPlanePos);
 	}
 	
 	/*synchronized public void onDrawShadow(GL10 gl){
@@ -146,12 +171,11 @@ public class EnemiesManager {
 			
 			EnemyCategory category = enemyData.getCategory();
 			
-			enemy = derivativeEnemyFactory.getDerivativeEnemy
-					(enemyData.name, category, cbOfMyPlanePos, parent -> addChildEnemy(parent));
+			enemy = derivativeEnemyFactory.getDerivativeEnemy(enemyData.name, category, this);
 		}
 		else{
 			
-			enemy = new Enemy(cbOfMyPlanePos,parent -> addChildEnemy(parent));
+			enemy = new Enemy(this);
 		}
 		
 		enemy.setData(enemyData, requestStartPos, parentEnemy);
@@ -173,4 +197,5 @@ public class EnemiesManager {
 		}
 		return result;
 	}
+
 }

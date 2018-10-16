@@ -2,7 +2,7 @@ package shootingEditor.enemy.derivativeType;
 
 import shootingEditor.CallbackOfMyPlane;
 import shootingEditor.Global;
-import shootingEditor.enemy.CallbackOfGeneratingChild;
+import shootingEditor.enemy.EnemyCommunicable;
 import shootingEditor.enemy.Enemy;
 import shootingEditor.enemy.EnemyData;
 import shootingEditor.vector.Double2Vector;

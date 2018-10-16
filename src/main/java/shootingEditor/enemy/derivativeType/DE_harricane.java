@@ -39,7 +39,7 @@ public class DE_harricane extends DerivativeEnemy{
 	
 	private boolean checkApproachingPlane(){
 		
-		Int2Vector myPlanePos = cbOfMyPlane.getMyPlanePos();
+		Int2Vector myPlanePos = enemyManager.getMyPlanePos();
 	
 		tempVec.set(myPlanePos.x - x, myPlanePos.y - y);	
 		distanceToPlane = tempVec.length();
@@ -50,7 +50,7 @@ public class DE_harricane extends DerivativeEnemy{
 	
 	private void pullPlane(){
 		
-		Int2Vector myPlanePos = cbOfMyPlane.getMyPlanePos();
+		Int2Vector myPlanePos = enemyManager.getMyPlanePos();
 		
 		pullPower = (distanceToPlane * 2 < thresholdDistance) ? 3 : 2; 
 		tempVec.normalize(pullPower);
@@ -60,7 +60,7 @@ public class DE_harricane extends DerivativeEnemy{
 		requestMyPlanePos.x -= tempVec.x;
 		requestMyPlanePos.y -= tempVec.y;
 		
-		cbOfMyPlane.setMyPlanePos(requestMyPlanePos);
+		enemyManager.setMyPlanePos(requestMyPlanePos);
 	}
 
 }

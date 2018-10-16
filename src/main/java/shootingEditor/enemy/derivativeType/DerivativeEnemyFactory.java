@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import shootingEditor.CallbackOfMyPlane;
-import shootingEditor.enemy.CallbackOfGeneratingChild;
+import shootingEditor.enemy.EnemyCommunicable;
 import shootingEditor.enemy.Enemy;
 import shootingEditor.enemy.EnemyData.EnemyCategory;
 
@@ -37,8 +37,7 @@ public class DerivativeEnemyFactory {
 	public Enemy getDerivativeEnemy(
 			
 			String enemyName, EnemyCategory category,
-			CallbackOfMyPlane cbOfMyPlanePos,
-			CallbackOfGeneratingChild cbOfGeneratingChild
+			EnemyCommunicable enemyManager
 		){
 		
 		DerivativeEnemy derivativeEnemy;
@@ -56,7 +55,7 @@ public class DerivativeEnemyFactory {
 			
 		}
 		
-		derivativeEnemy.initialize(cbOfMyPlanePos, cbOfGeneratingChild);
+		derivativeEnemy.initialize(enemyManager);
 		// リフレクションで簡単にデフォルトインストラクタによる生成を行っているため後からイニシャライザで設定しています
 		
 		return (Enemy)derivativeEnemy;

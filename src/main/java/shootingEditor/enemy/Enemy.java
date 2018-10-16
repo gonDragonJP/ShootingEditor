@@ -16,8 +16,7 @@ import shootingEditor.vector.IntRect;
 public class Enemy extends ProtoEnemy{
 
 	//private ItemGenerator itemGenerator;
-	protected CallbackOfMyPlane cbOfMyPlane;
-	protected CallbackOfGeneratingChild cbOfGeneratingChild;
+	protected EnemyCommunicable enemyManager;
 	
 	protected CalcParam calcParam;
 	
@@ -46,14 +45,12 @@ public class Enemy extends ProtoEnemy{
 
 	
 	public Enemy(
-			CallbackOfMyPlane cbOfMyPlanePos,
-			CallbackOfGeneratingChild cbOfGeneratingChild
+			EnemyCommunicable enemyManager
 	){
 		super();
 		//itemGenerator = container.itemGenerator;
 		
-		this.cbOfMyPlane = cbOfMyPlanePos;
-		this.cbOfGeneratingChild = cbOfGeneratingChild;
+		this.enemyManager = enemyManager;
 		
 		initialize();
 	}
@@ -103,7 +100,7 @@ public class Enemy extends ProtoEnemy{
 		if(parentEnemy == null){
 			
 				startPos = EnemyCalculator.getStartPositionWithAtrib
-					(cbOfMyPlane.getMyPlanePos(), startPos, startAttrib);
+					(enemyManager.getMyPlanePos(), startPos, startAttrib);
 		}
 		else{
 				startPos = parentEnemy.getChildStartPositionFromRequest(requestPos);
@@ -125,7 +122,7 @@ public class Enemy extends ProtoEnemy{
 	
 	public double getAngleOfTendToPlane(){
 		
-		Int2Vector myPlane = cbOfMyPlane.getMyPlanePos();
+		Int2Vector myPlane = enemyManager.getMyPlanePos();
 	
 		return -90 +
 			Math.atan2(myPlane.y - y, myPlane.x - x) / Global.radian;
@@ -176,7 +173,7 @@ public class Enemy extends ProtoEnemy{
 		
 		MovingNode nd = myData.node.get(index);
 		
-		Int2Vector myPlane = cbOfMyPlane.getMyPlanePos();
+		Int2Vector myPlane = enemyManager.getMyPlanePos();
 		
 		calcParam.initialize();
 		calcParam.myPlanePosition.set(myPlane.x, myPlane.y);
@@ -287,7 +284,7 @@ public class Enemy extends ProtoEnemy{
 	
 	private void homing(){
 		
-		Int2Vector myPlane = cbOfMyPlane.getMyPlanePos();
+		Int2Vector myPlane = enemyManager.getMyPlanePos();
 		
 		Double2Vector vector = new Double2Vector();
 		double speed = velocity.length();
@@ -320,7 +317,7 @@ public class Enemy extends ProtoEnemy{
 	
 	public Enemy requestGenerating(){
 		
-		return cbOfGeneratingChild.getGeneratingChild(this);
+		return enemyManager.getGeneratingChild(this);
 	}
 	
 	protected void rotateCollisionRegion(){
