@@ -157,6 +157,7 @@ public class Enemy extends ProtoEnemy{
         animeKind = AnimationSet.AnimeKind.EXPLOSION;
         totalAnimeFrame = 0;
 
+        if(myData.explosiveObjectID != -1) enemyManager.generateExplosiveObject(this);
         //SoundEffect.play(SoundKind.EXPLOSION1);
     }
 	

@@ -6,7 +6,7 @@ import shootingEditor.enemy.EnemyDrawer;
 
 public class DrawTest {
 	
-	static Enemy enemy = new Enemy(null, null);
+	static Enemy enemy = new Enemy(null);
 	static CollisionRegion col = new CollisionRegion();
 	
 	static void test(Canvas canvas){

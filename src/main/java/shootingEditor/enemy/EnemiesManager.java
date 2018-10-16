@@ -53,8 +53,11 @@ public class EnemiesManager implements EnemyCommunicable{
 
 	@Override
 	public void generateExplosiveObject(Enemy parent) {
-		// TODO Auto-generated method stub
 		
+		EnemyData srcData = getEnemyDataFromObjectID(parent.myData.explosiveObjectID);	
+		Int2Vector startPos = new Int2Vector(0, 0);
+		
+		generateEnemy(srcData, startPos, parent);
 	}
 
 	@Override
